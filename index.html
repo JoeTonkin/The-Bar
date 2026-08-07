@@ -42,9 +42,11 @@
   .weektitle .phase{font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;}
   .phase.deload{color:var(--steel);}
 
-  .tired-row{display:flex;justify-content:center;margin-bottom:14px;}
+  .tired-row{display:flex;justify-content:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
   .tired-btn{font-size:12px;letter-spacing:.04em;padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted);}
   .tired-btn.active{background:rgba(92,133,184,0.16);border-color:var(--steel);color:var(--steel);font-weight:600;}
+  .short-btn{font-size:12px;letter-spacing:.04em;padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted);}
+  .short-btn.active{background:rgba(201,240,77,0.14);border-color:var(--chalk);color:var(--chalk);font-weight:600;}
 
   .segrow{display:flex;gap:8px;margin-bottom:14px;}
   .segrow .seg{flex:1;text-align:center;padding:8px 0;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
@@ -69,21 +71,26 @@
   .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
   .ex-name{font-family:var(--font-display);font-size:17px;letter-spacing:.01em;}
   .ex-target{font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-top:2px;}
+  .ex-superset{font-size:10px;color:var(--amber);margin-top:3px;letter-spacing:.02em;}
+  .ex-warmup{font-size:10px;color:var(--steel);margin-top:3px;font-family:var(--font-mono);}
   .weight-edit{font-family:var(--font-mono);font-size:22px;color:var(--chalk);background:transparent;border:none;width:70px;text-align:right;}
   .weight-unit{font-size:12px;color:var(--muted);}
 
   .sets-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
-  .set-box{flex:1;min-width:48px;text-align:center;}
+  .set-box{flex:1;min-width:52px;text-align:center;}
   .set-box .setlbl{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
-  .set-box input{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--font-mono);font-size:16px;text-align:center;padding:6px 0;}
+  .set-box input{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:8px 8px 0 0;color:var(--text);font-family:var(--font-mono);font-size:16px;text-align:center;padding:6px 0;border-bottom:none;}
   .set-box input.short{border-color:var(--rust);color:var(--rust);}
   .set-box input.hit{border-color:var(--chalk);color:var(--chalk);}
+  .set-box input:disabled{opacity:0.9;}
+  .lockbtn{width:100%;padding:5px 0;font-size:11px;background:var(--surface-2);border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;color:var(--muted);}
+  .lockbtn.hit{background:rgba(201,240,77,0.16);border-color:var(--chalk);color:var(--chalk);font-weight:700;}
+  .lockbtn.short{background:rgba(232,84,62,0.14);border-color:var(--rust);color:var(--rust);font-weight:700;}
 
   .card-actions{display:flex;gap:8px;margin-top:12px;}
   .btn{flex:1;padding:10px 0;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:13px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;text-align:center;}
   .btn.logged{background:var(--chalk);color:#111;border-color:var(--chalk);}
-  .btn.warn{background:rgba(232,168,62,0.12);border-color:var(--amber);color:var(--amber);}
-  .btn.danger{background:rgba(232,84,62,0.10);border-color:var(--rust);color:var(--rust);}
+  .btn.skip{flex:0 0 auto;padding:10px 14px;background:transparent;color:var(--muted);border-color:var(--line);}
   .streak-note{font-size:11px;color:var(--rust);margin-top:8px;font-family:var(--font-mono);}
   .deload-note{font-size:11px;color:var(--steel);margin-top:8px;font-family:var(--font-mono);}
 
@@ -160,6 +167,7 @@
 
     <div class="tired-row">
       <div class="tired-btn" id="tiredBtn">😴 Feeling wiped? Pull in a deload</div>
+      <div class="short-btn" id="shortBtn">⚡ Short on time today</div>
     </div>
 
     <div class="segrow" id="sessionSeg"></div>
@@ -168,7 +176,7 @@
     <div class="barwrap">
       <div class="label"><span>SESSION LOAD</span><span id="barPct">0/0</span></div>
       <div class="bar-rail"><div class="bar-line"></div><div class="plates" id="plateRow"></div></div>
-      <div class="bar-caption" id="barCaption">Log today's lifts below</div>
+      <div class="bar-caption" id="barCaption">Lock in each set below</div>
     </div>
 
     <div class="daytabs" id="dayTabs"></div>
@@ -186,25 +194,30 @@
       <div class="plan-row"><span>Block 3</span><span>Weeks 11–16 · Hold</span></div>
     </div>
 
-    <h2 class="section-title">Splits by sessions/week</h2>
+    <h2 class="section-title">Split</h2>
     <div class="info-card">
-      <div class="plan-row"><span>2 sessions</span><span>Full Body A / B</span></div>
-      <div class="plan-row"><span>3 sessions</span><span>Upper / Lower / Upper</span></div>
-      <div class="plan-row"><span>4 sessions</span><span>Upper / Lower / Upper / Lower</span></div>
+      <div class="plan-row"><span>Style</span><span>Push / Pull (no dedicated leg day)</span></div>
+      <div class="plan-row"><span>2 sessions</span><span>Push, Pull</span></div>
+      <div class="plan-row"><span>3 sessions</span><span>Push, Pull, Push</span></div>
+      <div class="plan-row"><span>4 sessions</span><span>Push, Pull, Push, Pull</span></div>
+      <div class="plan-row"><span>Push covers</span><span>Chest, shoulders, triceps, quads</span></div>
+      <div class="plan-row"><span>Pull covers</span><span>Back, biceps, hamstrings</span></div>
     </div>
 
     <h2 class="section-title">How progression works</h2>
     <div class="info-card" style="font-size:13px;line-height:1.6;color:var(--muted)">
-      Log the reps you actually get on every set. Hit the target range on all sets → weight goes up next time.<br>
+      Lock in the reps you actually get on every set. Hit the target range on all sets → weight goes up next time.<br>
       Fall short on any set → repeat the same weight.<br>
       Miss two sessions running on a lift → drops 5% and builds back up.<br>
       Deload weeks (5 &amp; 10, or any week you flag as "feeling wiped") auto-load at 60%, 2 sets, no progression — just move and recover.
     </div>
 
-    <h2 class="section-title">Adding exercises</h2>
+    <h2 class="section-title">Adjusting on the fly</h2>
     <div class="info-card" style="font-size:13px;line-height:1.6;color:var(--muted)">
-      On a 4-session week, the "add exercise" list will flag a lift with ⚠️ if it'd be the 3rd time that muscle group gets trained in the week — a nudge, not a hard stop.<br>
-      On a 2-session week, you'll see suggested add-ons for muscle groups the Full Body split doesn't otherwise cover.
+      "Short on time" trims sets and drops any exercise whose muscle group is already covered elsewhere this week.<br>
+      Any exercise can be skipped for just today — it'll come back on its normal day next time.<br>
+      On a 4-session week, the "add exercise" list flags a lift with ⚠️ if it'd be the 3rd time that muscle group gets trained that week.<br>
+      On a 2-session week, you'll see suggested add-ons for muscle groups Push/Pull don't otherwise cover (glutes, calves).
     </div>
   </div>
 
@@ -220,12 +233,16 @@
     <div class="strength-table" id="strengthTable">
       <div class="st-row head"><span>Week</span><span>Squat</span><span>Bench</span><span>RDL</span></div>
     </div>
+
+    <h2 class="section-title">This Week's Volume</h2>
+    <div class="note">Working sets logged so far this week, by muscle group.</div>
+    <div class="strength-table" id="volumeTable"></div>
   </div>
 
   <!-- LIBRARY VIEW -->
   <div class="view" id="view-library">
     <h2 class="section-title" style="margin-top:16px">Exercise Library</h2>
-    <div class="note">Program lifts drive the weekly split and can't be removed. Starter and custom exercises can be hidden or deleted if you never use them — this only affects the "add exercise" list, past logs stay intact.</div>
+    <div class="note">Program lifts drive the weekly split and can't be removed (but can be skipped for a single day from Today). Starter and custom exercises can be hidden or deleted if you never use them — this only affects the "add exercise" list, past logs stay intact.</div>
     <div id="libraryContent"></div>
   </div>
 
@@ -255,6 +272,16 @@
     <div class="history" id="historyList">
       <div class="empty">No entries yet</div>
     </div>
+
+    <h2 class="section-title">Backup</h2>
+    <div class="info-card">
+      <div class="note" style="margin-bottom:10px">Your data lives only in this phone's browser storage. Export a backup occasionally, especially before clearing Safari data or switching devices.</div>
+      <div class="sets-row" style="margin-top:0">
+        <div class="btn logged" id="exportBtn">Export backup</div>
+        <div class="btn" id="importBtn">Import backup</div>
+      </div>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+    </div>
   </div>
 
   <div class="nav">
@@ -270,32 +297,32 @@
 /* ---------------- MUSCLE GROUPS ---------------- */
 const ALL_MUSCLES = ['chest','back','shoulders','biceps','triceps','quads','hamstrings','glutes','calves'];
 
-/* ---------------- PROGRAM EXERCISES (structural — drive the weekly split) ---------------- */
+/* ---------------- PROGRAM EXERCISES (structural — drive Push/Pull) ---------------- */
 const EX = {
   bench:      {id:'bench', name:'Bench Press', startWeight:70, sets:4, repMin:4, repMax:6, inc:2.5, muscle:'chest'},
-  row:        {id:'row', name:'Barbell Row', startWeight:60, sets:4, repMin:8, repMax:10, inc:2.5, muscle:'back'},
-  inclineDB1: {id:'inclineDB1', name:'Incline DB Press', startWeight:30, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'chest'},
-  pulldown1:  {id:'pulldown1', name:'Lat Pulldown', startWeight:65, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'back'},
-  lateral:    {id:'lateral', name:'Lateral Raise', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'shoulders'},
-  squat:      {id:'squat', name:'Back Squat', startWeight:75, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'quads'},
-  rdl:        {id:'rdl', name:'Romanian Deadlift', startWeight:80, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'hamstrings'},
-  lunge:      {id:'lunge', name:'Walking Lunge', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
-  calves:     {id:'calves', name:'Calf Raise', startWeight:40, sets:4, repMin:12, repMax:15, inc:5, muscle:'calves'},
-  inclineDB2: {id:'inclineDB2', name:'Incline DB Press', startWeight:27.5, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'chest'},
   ohp:        {id:'ohp', name:'Overhead Press', startWeight:40, sets:3, repMin:5, repMax:6, inc:2.5, muscle:'shoulders'},
-  cableRow:   {id:'cableRow', name:'Cable Row', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
-  pulldown2:  {id:'pulldown2', name:'Lat Pulldown', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
-  curl:       {id:'curl', name:'Bicep Curl', startWeight:25, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps'},
+  inclineDB1: {id:'inclineDB1', name:'Incline DB Press', startWeight:30, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'chest'},
+  squat:      {id:'squat', name:'Back Squat', startWeight:75, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'quads'},
+  lateral:    {id:'lateral', name:'Lateral Raise', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'shoulders'},
   pushdown:   {id:'pushdown', name:'Triceps Pushdown', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps'},
-  gobletSquat:{id:'gobletSquat', name:'Goblet Squat', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
+  row:        {id:'row', name:'Barbell Row', startWeight:60, sets:4, repMin:8, repMax:10, inc:2.5, muscle:'back'},
+  pulldown1:  {id:'pulldown1', name:'Lat Pulldown', startWeight:65, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'back'},
+  rdl:        {id:'rdl', name:'Romanian Deadlift', startWeight:80, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'hamstrings'},
   legCurl:    {id:'legCurl', name:'Seated Leg Curl', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'hamstrings'},
+  curl:       {id:'curl', name:'Bicep Curl', startWeight:25, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps'},
 };
 
-/* ---------------- STARTER LIBRARY (cable / dumbbell add-ons, not part of the default split) ---------------- */
+/* ---------------- STARTER LIBRARY (cable/dumbbell add-ons + former program lifts, not part of the default split) ---------------- */
 const LIBRARY = {
-  cableTricepOverhead: {id:'cableTricepOverhead', name:'Cable Overhead Tricep Extension', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps'},
-  cableFly:            {id:'cableFly', name:'Cable Fly', startWeight:15, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'chest'},
-  dbChestFly:          {id:'dbChestFly', name:'Dumbbell Chest Fly', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'chest'},
+  lunge:                {id:'lunge', name:'Walking Lunge', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
+  calves:               {id:'calves', name:'Calf Raise', startWeight:40, sets:4, repMin:12, repMax:15, inc:5, muscle:'calves'},
+  gobletSquat:          {id:'gobletSquat', name:'Goblet Squat', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
+  cableRow:             {id:'cableRow', name:'Cable Row', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
+  pulldown2:            {id:'pulldown2', name:'Lat Pulldown (wide grip)', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
+  inclineDB2:           {id:'inclineDB2', name:'Incline DB Press (volume)', startWeight:27.5, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'chest'},
+  cableTricepOverhead:  {id:'cableTricepOverhead', name:'Cable Overhead Tricep Extension', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps'},
+  cableFly:             {id:'cableFly', name:'Cable Fly', startWeight:15, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'chest'},
+  dbChestFly:           {id:'dbChestFly', name:'Dumbbell Chest Fly', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'chest'},
   cableFacePull:        {id:'cableFacePull', name:'Cable Face Pull', startWeight:20, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'shoulders'},
   cableUprightRow:      {id:'cableUprightRow', name:'Cable Upright Row', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'shoulders'},
   dbShoulderPress:      {id:'dbShoulderPress', name:'Dumbbell Shoulder Press', startWeight:20, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'shoulders'},
@@ -309,24 +336,37 @@ const LIBRARY = {
   cableSeatedCalf:      {id:'cableSeatedCalf', name:'Seated Calf Raise', startWeight:30, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'calves'},
 };
 
-/* ---------------- SESSION TEMPLATES ---------------- */
+/* ---------------- SESSION TEMPLATES: PUSH / PULL (no dedicated leg day) ---------------- */
 const SESSIONS = {
-  upperStrength: {label:'Upper Strength', ex:['bench','row','inclineDB1','pulldown1','lateral']},
-  lower:         {label:'Lower Body',     ex:['squat','rdl','lunge','calves']},
-  upperVolume:   {label:'Upper Volume',   ex:['inclineDB2','ohp','cableRow','pulldown2','curl','pushdown']},
-  fullA:         {label:'Full Body A',    ex:['bench','squat','row','lateral']},
-  fullB:         {label:'Full Body B',    ex:['ohp','rdl','pulldown1','curl']},
-  lowerVolume:   {label:'Lower + Arms',   ex:['gobletSquat','legCurl','curl','pushdown']},
+  push: {label:'Push', ex:['bench','ohp','inclineDB1','squat','lateral','pushdown']},
+  pull: {label:'Pull', ex:['row','pulldown1','rdl','legCurl','curl']},
 };
 const SPLITS = {
-  2: ['fullA','fullB'],
-  3: ['upperStrength','lower','upperVolume'],
-  4: ['upperStrength','lower','upperVolume','lowerVolume'],
+  2: ['push','pull'],
+  3: ['push','pull','push'],
+  4: ['push','pull','push','pull'],
+};
+
+/* ---------------- SUPERSET HINTS (non-competing pairs within the same day, for speed) ---------------- */
+const SUPERSET_PAIRS = {
+  squat:'bench', bench:'squat',
+  ohp:'lateral', lateral:'ohp',
+  inclineDB1:'pushdown', pushdown:'inclineDB1',
+  row:'legCurl', legCurl:'row',
+  pulldown1:'rdl', rdl:'pulldown1',
 };
 
 const TOTAL_WEEKS = 16;
 const GOAL_START = 92, GOAL_END_HIGH = 84;
 const STRENGTH_IDS = ['squat','bench','rdl'];
+const WARMUP_IDS = ['bench','squat','rdl','ohp'];
+const BAR_WEIGHT = 20;
+
+function warmupLine(weight){
+  const w1 = Math.max(BAR_WEIGHT, Math.round((weight*0.5)/2.5)*2.5);
+  const w2 = Math.max(BAR_WEIGHT, Math.round((weight*0.7)/2.5)*2.5);
+  return `${BAR_WEIGHT}kg×10, ${w1}kg×5, ${w2}kg×3`;
+}
 
 function phaseForWeek(w){
   if(meta.manualDeload && meta.manualDeload[w]) return {key:'deload', label:'DELOAD · RECOVER (flagged)'};
@@ -342,7 +382,11 @@ let progressLog = [];
 let meta = {currentWeek:1, sessions:{}, manualDeload:{}};
 let customEx = {};        // personal exercise library
 let extras = {};          // per session: {logKey: [exerciseId, ...]}
+let skips = {};           // per session: {logKey: [exerciseId, ...]} — program lifts skipped just for today
+let shortSessions = {};   // per session: {logKey: true}
+let sessionNotes = {};    // per session: {logKey: 'text'}
 let hiddenLibrary = [];   // starter LIBRARY ids the user has hidden
+let pending = {};         // in-progress (not yet fully locked) sets: {logKey+'|'+id: {reps:[], locked:[], weight}}
 let currentWeek = 1;
 let currentTplIndex = 0;
 
@@ -362,7 +406,11 @@ async function loadState(){
   meta = Object.assign({currentWeek:1, sessions:{}, manualDeload:{}}, lsGet('meta') || {});
   customEx = lsGet('custom-exercises') || {};
   extras = lsGet('session-extras') || {};
+  skips = lsGet('session-skips') || {};
+  shortSessions = lsGet('short-sessions') || {};
+  sessionNotes = lsGet('session-notes') || {};
   hiddenLibrary = lsGet('hidden-library') || [];
+  pending = lsGet('pending-sets') || {};
   currentWeek = meta.currentWeek || 1;
 }
 async function saveExState(){ lsSet('exercise-state', exState); }
@@ -370,7 +418,40 @@ async function saveProgressLog(){ lsSet('progress-log', progressLog); }
 async function saveMeta(){ meta.currentWeek = currentWeek; lsSet('meta', meta); }
 async function saveCustomEx(){ lsSet('custom-exercises', customEx); }
 async function saveExtras(){ lsSet('session-extras', extras); }
+async function saveSkips(){ lsSet('session-skips', skips); }
+async function saveShortSessions(){ lsSet('short-sessions', shortSessions); }
+async function saveSessionNotes(){ lsSet('session-notes', sessionNotes); }
 async function saveHiddenLibrary(){ lsSet('hidden-library', hiddenLibrary); }
+async function savePending(){ lsSet('pending-sets', pending); }
+
+function allStateKeys(){
+  return ['exercise-state','progress-log','meta','custom-exercises','session-extras','session-skips','short-sessions','session-notes','hidden-library'];
+}
+function exportData(){
+  const data = {};
+  allStateKeys().forEach(k => { data[k] = lsGet(k); });
+  data.exportedAt = new Date().toISOString();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'thebar-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+async function importData(file){
+  const text = await file.text();
+  let data;
+  try{ data = JSON.parse(text); }catch(e){ alert('That file could not be read as a backup.'); return; }
+  allStateKeys().forEach(k=>{
+    if(data[k] !== undefined) lsSet(k, data[k]);
+  });
+  await loadState();
+  renderAll();
+  alert('Backup restored.');
+}
 
 function getExDef(id){ return EX[id] || LIBRARY[id] || customEx[id]; }
 function getExState(id){
@@ -381,24 +462,39 @@ function getExState(id){
 }
 function sessionsThisWeek(week){ return meta.sessions[week] || 3; }
 function templateKeysForWeek(week){ return SPLITS[sessionsThisWeek(week)]; }
-function sessionExerciseIds(tplKey, logKey){
-  return SESSIONS[tplKey].ex.concat(extras[logKey] || []);
-}
 function weekDayList(week){
   return templateKeysForWeek(week).map(k=>({tplKey:k, logKey:'w'+week+'-'+k}));
+}
+function baseSessionIds(tplKey, logKey){
+  const skipped = skips[logKey] || [];
+  return SESSIONS[tplKey].ex.concat(extras[logKey] || []).filter(id => !skipped.includes(id));
+}
+function sessionExerciseIds(tplKey, logKey){
+  let ids = baseSessionIds(tplKey, logKey);
+  if(shortSessions[logKey]){
+    ids = ids.filter((id, idx) => {
+      if(idx === 0) return true; // always keep the day's primary lift
+      const def = getExDef(id);
+      return muscleCountThisWeek(currentWeek, def.muscle, logKey) === 0;
+    });
+  }
+  return ids;
 }
 function targetWeightFor(id, week){
   const st = getExState(id);
   if(phaseForWeek(week).key==='deload') return Math.round((st.weight*0.6)/2.5)*2.5;
   return st.weight;
 }
-function targetSetsFor(id, week){
-  return phaseForWeek(week).key==='deload' ? 2 : getExDef(id).sets;
+function targetSetsFor(id, week, logKey){
+  if(phaseForWeek(week).key==='deload') return 2;
+  let sets = getExDef(id).sets;
+  if(shortSessions[logKey]) sets = Math.max(2, Math.ceil(sets/2));
+  return sets;
 }
 
 /* ---------------- FATIGUE / SUGGESTION HELPERS ---------------- */
 function muscleCoveredOnDay(tplKey, logKey, muscle){
-  return sessionExerciseIds(tplKey, logKey).some(id=>{
+  return baseSessionIds(tplKey, logKey).some(id=>{
     const d = getExDef(id);
     return d && d.muscle === muscle;
   });
@@ -414,7 +510,7 @@ function muscleCountThisWeek(week, muscle, excludeLogKey){
 function missingMusclesThisWeek(week){
   const covered = new Set();
   weekDayList(week).forEach(d=>{
-    sessionExerciseIds(d.tplKey, d.logKey).forEach(id=>{
+    baseSessionIds(d.tplKey, d.logKey).forEach(id=>{
       const def = getExDef(id);
       if(def) covered.add(def.muscle);
     });
@@ -460,6 +556,20 @@ function renderTiredBtn(){
   };
 }
 
+function renderShortBtn(){
+  const {logKey} = currentLogKey();
+  const btn = document.getElementById('shortBtn');
+  const active = !!shortSessions[logKey];
+  btn.className = 'short-btn' + (active ? ' active' : '');
+  btn.textContent = active ? '⚡ Short session active — tap to undo' : '⚡ Short on time today';
+  btn.onclick = async ()=>{
+    shortSessions[logKey] = !active;
+    if(!shortSessions[logKey]) delete shortSessions[logKey];
+    await saveShortSessions();
+    renderAll();
+  };
+}
+
 function renderDayTabs(){
   const keys = templateKeysForWeek(currentWeek);
   if(currentTplIndex >= keys.length) currentTplIndex = 0;
@@ -468,7 +578,7 @@ function renderDayTabs(){
   keys.forEach((k,i)=>{
     const el = document.createElement('div');
     el.className = 'daytab' + (i===currentTplIndex ? ' active':'');
-    el.textContent = SESSIONS[k].label;
+    el.textContent = SESSIONS[k].label + (keys.filter(x=>x===k).length>1 ? ' '+(keys.slice(0,i+1).filter(x=>x===k).length) : '');
     el.onclick = ()=>{ currentTplIndex = i; renderAll(); };
     wrap.appendChild(el);
   });
@@ -496,9 +606,47 @@ function renderBar(){
   });
   document.getElementById('barPct').textContent = (done+missed)+'/'+ids.length;
   const cap = document.getElementById('barCaption');
-  if(done+missed===0) cap.textContent = "Log today's lifts below";
+  if(done+missed===0) cap.textContent = "Lock in each set below";
   else if(done+missed===ids.length) cap.textContent = 'Session logged.';
   else cap.textContent = (ids.length-done-missed)+' lift(s) left';
+}
+
+function pendingKey(logKey, id){ return logKey+'|'+id; }
+
+function ensurePending(logKey, id, setsCount, def){
+  const key = pendingKey(logKey, id);
+  if(!pending[key] || pending[key].reps.length !== setsCount){
+    pending[key] = {
+      reps: new Array(setsCount).fill(def.repMax),
+      locked: new Array(setsCount).fill(false),
+      weight: targetWeightFor(id, currentWeek)
+    };
+  }
+  return pending[key];
+}
+
+async function finalizeExercise(id, logKey, def){
+  const key = pendingKey(logKey, id);
+  const p = pending[key];
+  const st = getExState(id);
+  const hit = p.reps.every(r => r >= def.repMin);
+  st.log[logKey] = {reps: p.reps.slice(), weight: p.weight, hit};
+
+  if(phaseForWeek(currentWeek).key !== 'deload'){
+    if(hit){
+      st.weight = p.weight + def.inc;
+      st.missStreak = 0;
+    } else {
+      st.missStreak = (st.missStreak||0) + 1;
+      if(st.missStreak >= 2){
+        st.weight = Math.round((p.weight * 0.95)/2.5)*2.5;
+        st.missStreak = 0;
+      }
+    }
+  }
+  delete pending[key];
+  await saveExState();
+  await savePending();
 }
 
 function renderExercises(){
@@ -514,73 +662,161 @@ function renderExercises(){
     if(!def) return;
     const st = getExState(id);
     const targetW = targetWeightFor(id, currentWeek);
-    const targetSets = targetSetsFor(id, currentWeek);
+    const targetSets = targetSetsFor(id, currentWeek, logKey);
     const entry = st.log[logKey];
-    const repsArr = entry ? entry.reps.slice() : new Array(targetSets).fill(def.repMax);
     const isExtra = extraIds.includes(id);
-
-    const setsHtml = Array.from({length:targetSets}).map((_,i)=>{
-      const val = repsArr[i] !== undefined ? repsArr[i] : def.repMax;
-      const cls = entry ? (val >= def.repMin ? 'hit' : 'short') : '';
-      return `<div class="set-box"><div class="setlbl">Set ${i+1}</div><input type="number" inputmode="numeric" min="0" max="30" class="${cls}" data-id="${id}" data-set="${i}" value="${val}"></div>`;
-    }).join('');
+    const partnerId = SUPERSET_PAIRS[id];
+    const hasPartner = partnerId && ids.includes(partnerId);
 
     const card = document.createElement('div');
     card.className = 'card';
+
+    if(entry){
+      // fully logged — show summary + re-log option
+      card.innerHTML = `
+        <div class="card-top">
+          <div>
+            <div class="ex-name">${def.name}${isExtra ? ' <span style="color:var(--muted);font-size:11px;text-transform:none;font-family:var(--font-body)">(added)</span>' : ''}</div>
+            <div class="ex-target">${entry.weight}kg · ${entry.reps.join(', ')} reps</div>
+            ${hasPartner ? `<div class="ex-superset">⚡ Superset with ${getExDef(partnerId).name}</div>` : ''}
+          </div>
+        </div>
+        <div class="card-actions">
+          <div class="btn logged" data-relog="${id}">Logged ✓ — tap to adjust a set</div>
+        </div>
+        ${phase==='deload' ? '<div class="deload-note">Deload — no progression this week</div>' : ''}
+      `;
+      wrap.appendChild(card);
+      return;
+    }
+
+    const p = ensurePending(logKey, id, targetSets, def);
+    const showWarmup = WARMUP_IDS.includes(id) && phase !== 'deload';
+
+    const setsHtml = Array.from({length:targetSets}).map((_,i)=>{
+      const val = p.reps[i];
+      const locked = p.locked[i];
+      const cls = locked ? (val >= def.repMin ? 'hit' : 'short') : '';
+      return `
+        <div class="set-box">
+          <div class="setlbl">Set ${i+1}</div>
+          <input type="number" inputmode="numeric" min="0" max="30" class="${cls}" data-id="${id}" data-set="${i}" value="${val}" ${locked?'disabled':''}>
+          <div class="lockbtn ${cls}" data-lockset="${id}" data-set="${i}">${locked ? (val>=def.repMin?'✓ hit — tap to fix':'✕ short — tap to fix') : 'Lock'}</div>
+        </div>`;
+    }).join('');
+
     card.innerHTML = `
       <div class="card-top">
         <div>
           <div class="ex-name">${def.name}${isExtra ? ' <span style="color:var(--muted);font-size:11px;text-transform:none;font-family:var(--font-body)">(added)</span>' : ''}</div>
           <div class="ex-target">${targetSets} sets · ${def.repMin}-${def.repMax} reps</div>
+          ${showWarmup ? `<div class="ex-warmup">Warm-up: ${warmupLine(p.weight)}</div>` : ''}
+          ${hasPartner ? `<div class="ex-superset">⚡ Superset with ${getExDef(partnerId).name}</div>` : ''}
         </div>
         <div style="text-align:right">
-          <input class="weight-edit" type="number" step="0.5" value="${targetW}" data-weightfor="${id}">
+          <input class="weight-edit" type="number" step="0.5" value="${p.weight}" data-weightfor="${id}">
           <div class="weight-unit">kg</div>
         </div>
       </div>
       <div class="sets-row">${setsHtml}</div>
       <div class="card-actions">
-        <div class="btn ${entry ? 'logged':''}" data-log="${id}">${entry ? 'Logged ✓ — tap to re-log' : 'Log session'}</div>
-        ${isExtra ? `<div class="btn" data-remove="${id}" style="flex:0 0 auto;padding:10px 14px">Remove</div>` : ''}
+        ${isExtra ? `<div class="btn skip" data-remove="${id}">Remove</div>` : `<div class="btn skip" data-skip="${id}">Skip today</div>`}
       </div>
       ${phase==='deload' ? '<div class="deload-note">Deload — no progression this week</div>' : (st.missStreak>=1 ? '<div class="streak-note">Missed last time — one more miss drops the weight 5%</div>' : '')}
     `;
     wrap.appendChild(card);
   });
 
-  wrap.querySelectorAll('[data-log]').forEach(btn=>{
+  // re-log — restores previous values, all pre-locked, so a single set can be unlocked and fixed
+  wrap.querySelectorAll('[data-relog]').forEach(btn=>{
     btn.onclick = async ()=>{
-      const id = btn.getAttribute('data-log');
-      const def = getExDef(id);
+      const id = btn.getAttribute('data-relog');
       const st = getExState(id);
-      const card = btn.closest('.card');
-      const weightInput = card.querySelector(`[data-weightfor="${id}"]`);
-      const usedWeight = parseFloat(weightInput.value) || st.weight;
-      const setInputs = card.querySelectorAll(`input[data-set][data-id="${id}"]`);
-      const reps = Array.from(setInputs).map(i=>parseInt(i.value)||0);
-      const hit = reps.every(r=>r >= def.repMin);
-
       const {logKey} = currentLogKey();
-      st.log[logKey] = {reps, weight: usedWeight, hit};
-
-      if(phaseForWeek(currentWeek).key !== 'deload'){
-        if(hit){
-          st.weight = usedWeight + def.inc;
-          st.missStreak = 0;
-        } else {
-          st.missStreak = (st.missStreak||0) + 1;
-          if(st.missStreak >= 2){
-            st.weight = Math.round((usedWeight * 0.95)/2.5)*2.5;
-            st.missStreak = 0;
-          }
-        }
-      }
+      const entry = st.log[logKey];
+      pending[pendingKey(logKey, id)] = {
+        reps: entry.reps.slice(),
+        locked: entry.reps.map(()=>true),
+        weight: entry.weight
+      };
+      delete st.log[logKey];
+      await savePending();
       await saveExState();
       renderBar();
       renderExercises();
     };
   });
 
+  // weight edit — updates pending weight
+  wrap.querySelectorAll('[data-weightfor]').forEach(inp=>{
+    inp.onchange = ()=>{
+      const id = inp.getAttribute('data-weightfor');
+      const {logKey} = currentLogKey();
+      const key = pendingKey(logKey, id);
+      if(pending[key]) pending[key].weight = parseFloat(inp.value) || pending[key].weight;
+      savePending();
+    };
+  });
+
+  // rep input — updates pending reps live
+  wrap.querySelectorAll('input[data-set]').forEach(inp=>{
+    inp.oninput = ()=>{
+      const id = inp.getAttribute('data-id');
+      const setIdx = parseInt(inp.getAttribute('data-set'));
+      const {logKey} = currentLogKey();
+      const key = pendingKey(logKey, id);
+      if(pending[key]) pending[key].reps[setIdx] = parseInt(inp.value)||0;
+      savePending();
+    };
+  });
+
+  // lock/unlock a set — colors it immediately, auto-submits when all sets locked
+  wrap.querySelectorAll('[data-lockset]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const id = btn.getAttribute('data-lockset');
+      const setIdx = parseInt(btn.getAttribute('data-set'));
+      const def = getExDef(id);
+      const {logKey} = currentLogKey();
+      const key = pendingKey(logKey, id);
+      const p = pending[key];
+      if(!p) return;
+
+      const card = btn.closest('.card');
+      const input = card.querySelector(`input[data-id="${id}"][data-set="${setIdx}"]`);
+
+      if(p.locked[setIdx]){
+        // already locked — tap again to unlock and fix
+        p.locked[setIdx] = false;
+        await savePending();
+        renderExercises();
+        return;
+      }
+
+      p.reps[setIdx] = parseInt(input.value) || 0;
+      p.locked[setIdx] = true;
+      await savePending();
+
+      if(p.locked.every(l => l)){
+        await finalizeExercise(id, logKey, def);
+      }
+      renderBar();
+      renderExercises();
+    };
+  });
+
+  // skip a program lift for today only
+  wrap.querySelectorAll('[data-skip]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const id = btn.getAttribute('data-skip');
+      const {logKey} = currentLogKey();
+      skips[logKey] = (skips[logKey] || []).concat(id);
+      await saveSkips();
+      renderBar();
+      renderExercises();
+    };
+  });
+
+  // remove an added extra for today
   wrap.querySelectorAll('[data-remove]').forEach(btn=>{
     btn.onclick = async ()=>{
       const id = btn.getAttribute('data-remove');
@@ -594,6 +830,24 @@ function renderExercises(){
 
   renderSuggestions(wrap, tplKey, logKey, ids);
   renderAddExercise(wrap, tplKey, logKey, ids);
+  renderSessionNotes(wrap, logKey);
+}
+
+function renderSessionNotes(wrap, logKey){
+  const box = document.createElement('div');
+  box.className = 'info-card';
+  const existing = sessionNotes[logKey] || '';
+  box.innerHTML = `
+    <div class="section-title" style="margin:0 0 10px">Session notes</div>
+    <textarea id="sessionNoteInput" placeholder="Optional — e.g. felt heavy, rushed warm-up, slept badly" style="width:100%;min-height:60px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;font-size:13px;font-family:var(--font-body);resize:vertical">${existing}</textarea>
+  `;
+  wrap.appendChild(box);
+  const ta = box.querySelector('#sessionNoteInput');
+  ta.onblur = async ()=>{
+    const val = ta.value.trim();
+    if(val) sessionNotes[logKey] = val; else delete sessionNotes[logKey];
+    await saveSessionNotes();
+  };
 }
 
 function renderSuggestions(wrap, tplKey, logKey, currentIds){
@@ -611,7 +865,7 @@ function renderSuggestions(wrap, tplKey, logKey, currentIds){
   box.className = 'suggest-card';
   box.innerHTML = `
     <div class="stitle">Only 2 sessions this week</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">This split doesn't otherwise train ${missing.join(', ')}. Worth adding one:</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Push/Pull doesn't otherwise train ${missing.join(', ')}. Worth adding one:</div>
     <div class="chip-row">
       ${chips.map(c=>`<div class="chip" data-suggest="${c.id}">+ ${c.name}</div>`).join('')}
     </div>
@@ -641,7 +895,6 @@ function renderAddExercise(wrap, tplKey, logKey, currentIds){
     Object.values(customEx).filter(e=>!currentSet.has(e.id))
   );
 
-  // group by muscle for the dropdown, with fatigue warning on 4-day weeks
   const grouped = {};
   pool.forEach(def=>{
     let label = def.name;
@@ -781,6 +1034,29 @@ function renderStrength(){
   }
 }
 
+function renderWeeklyVolume(){
+  const totals = {};
+  Object.keys(exState).forEach(id=>{
+    const def = getExDef(id);
+    if(!def) return;
+    const st = exState[id];
+    Object.keys(st.log).forEach(key=>{
+      const m = key.match(/^w(\d+)-/);
+      if(!m || parseInt(m[1]) !== currentWeek) return;
+      totals[def.muscle] = (totals[def.muscle]||0) + st.log[key].reps.length;
+    });
+  });
+  const table = document.getElementById('volumeTable');
+  const musclesWithData = ALL_MUSCLES.filter(m=>totals[m]);
+  if(musclesWithData.length===0){
+    table.innerHTML = '<div class="st-row"><span style="color:var(--muted)">No sets logged yet this week</span></div>';
+    return;
+  }
+  table.innerHTML = musclesWithData.map(m=>`
+    <div class="st-row"><span style="text-transform:capitalize">${m}</span><span style="grid-column:2/5;text-align:right">${totals[m]} sets</span></div>
+  `).join('');
+}
+
 /* ---------------- RENDER: LIBRARY ---------------- */
 function renderLibrary(){
   const wrap = document.getElementById('libraryContent');
@@ -816,7 +1092,7 @@ function renderLibrary(){
     wrap.appendChild(block);
   }
 
-  groupBlock('Program lifts (fixed)', Object.values(EX), null);
+  groupBlock('Program lifts (fixed — Push/Pull)', Object.values(EX), null);
   const visibleLibrary = Object.values(LIBRARY).filter(e=>!hiddenLibrary.includes(e.id));
   groupBlock('Starter library', visibleLibrary, 'hide');
   if(Object.values(customEx).length){
@@ -887,11 +1163,13 @@ function renderProgress(){
 function renderAll(){
   renderWeekHeader();
   renderTiredBtn();
+  renderShortBtn();
   renderSessionSeg();
   renderDayTabs();
   renderBar();
   renderExercises();
   renderStrength();
+  renderWeeklyVolume();
   renderLibrary();
   renderProgress();
 }
@@ -923,6 +1201,14 @@ document.getElementById('saveProgress').onclick = async ()=>{
   document.getElementById('inputWeight').value='';
   document.getElementById('inputWaist').value='';
   renderProgress();
+};
+
+document.getElementById('exportBtn').onclick = exportData;
+document.getElementById('importBtn').onclick = ()=> document.getElementById('importFile').click();
+document.getElementById('importFile').onchange = (e)=>{
+  const file = e.target.files[0];
+  if(file) importData(file);
+  e.target.value = '';
 };
 
 document.getElementById('dateTag').textContent = new Date().toLocaleDateString(undefined,{month:'short', day:'numeric'});

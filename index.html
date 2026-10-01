@@ -10,16 +10,8 @@
 <title>THE BAR — 16 Week Log</title>
 <style>
   :root{
-    --bg:#14161a;
-    --surface:#1c1f24;
-    --surface-2:#23262c;
-    --line:#2e3238;
-    --text:#eeeeee;
-    --muted:#8b909a;
-    --chalk:#c9f04d;
-    --steel:#5c85b8;
-    --rust:#e8543e;
-    --amber:#e8a83e;
+    --bg:#14161a; --surface:#1c1f24; --surface-2:#23262c; --line:#2e3238;
+    --text:#eeeeee; --muted:#8b909a; --chalk:#c9f04d; --steel:#5c85b8; --rust:#e8543e; --amber:#e8a83e;
     --font-display:'Oswald', 'Arial Narrow', sans-serif;
     --font-body:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono:'JetBrains Mono', 'Courier New', monospace;
@@ -48,8 +40,8 @@
   .short-btn{font-size:12px;letter-spacing:.04em;padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted);}
   .short-btn.active{background:rgba(201,240,77,0.14);border-color:var(--chalk);color:var(--chalk);font-weight:600;}
 
-  .segrow{display:flex;gap:8px;margin-bottom:14px;}
-  .segrow .seg{flex:1;text-align:center;padding:8px 0;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .segrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .segrow .seg{flex:1 1 30%;text-align:center;padding:8px 6px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
   .segrow .seg.active{background:var(--chalk);color:#111;border-color:var(--chalk);font-weight:700;}
   .seg-caption{font-size:11px;color:var(--muted);text-align:center;margin:-6px 0 14px;}
 
@@ -94,9 +86,8 @@
   .streak-note{font-size:11px;color:var(--rust);margin-top:8px;font-family:var(--font-mono);}
   .deload-note{font-size:11px;color:var(--steel);margin-top:8px;font-family:var(--font-mono);}
 
-  .plan-block{margin-bottom:16px;}
   .plan-row{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:13px;padding:6px 0;border-bottom:1px solid var(--line);}
-  .plan-row span:last-child{color:var(--muted);}
+  .plan-row span:last-child{color:var(--muted);text-align:right;}
   .info-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;}
   .suggest-card{background:rgba(232,168,62,0.08);border:1px solid var(--amber);border-radius:14px;padding:14px;margin-bottom:14px;}
   .suggest-card .stitle{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
@@ -107,15 +98,6 @@
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;}
   .stat .num{font-family:var(--font-mono);font-size:22px;color:var(--chalk);}
   .stat .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
-  .log-form{display:flex;gap:8px;margin-bottom:14px;}
-  .log-form input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:10px;font-family:var(--font-mono);font-size:14px;}
-  .log-form button{background:var(--chalk);color:#111;border:none;border-radius:10px;padding:0 16px;font-weight:700;}
-  .history{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
-  .history-row{display:flex;justify-content:space-between;padding:10px 14px;font-family:var(--font-mono);font-size:13px;border-bottom:1px solid var(--line);}
-  .history-row:last-child{border-bottom:none;}
-  .history-row .d{color:var(--muted);}
-  .chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;}
-  .chart svg{width:100%;height:auto;display:block;}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:20px 0;}
 
   .strength-table{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px;}
@@ -126,21 +108,27 @@
 
   .lib-group{margin-bottom:16px;}
   .lib-group h3{font-size:13px;color:var(--chalk);margin-bottom:6px;}
-  .lib-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+  .lib-row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+  .lib-row-top{display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
   .lib-row .li-name{font-size:13px;}
   .lib-row .li-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;}
   .lib-tag{font-size:9px;padding:3px 7px;border-radius:8px;background:var(--surface-2);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .lib-tag.warn{background:rgba(232,168,62,0.16);color:var(--amber);}
   .lib-remove{font-size:11px;color:var(--rust);padding:6px 10px;border:1px solid var(--rust);border-radius:8px;}
+  .lib-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.5;}
+  .lib-detail.open{display:block;}
+  .lib-detail a{color:var(--chalk);text-decoration:none;font-family:var(--font-mono);font-size:12px;}
 
   .nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);display:flex;z-index:30;}
-  .navbtn{flex:1;text-align:center;padding:12px 0 10px;color:var(--muted);font-size:9px;letter-spacing:.04em;text-transform:uppercase;}
-  .navbtn .ico{font-size:17px;display:block;margin-bottom:2px;}
+  .navbtn{flex:1;text-align:center;padding:12px 0 10px;color:var(--muted);font-size:10px;letter-spacing:.04em;text-transform:uppercase;}
+  .navbtn .ico{font-size:18px;display:block;margin-bottom:2px;}
   .navbtn.active{color:var(--chalk);}
 
   .view{display:none;padding-top:4px;}
   .view.active{display:block;}
   .section-title{font-size:12px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin:18px 0 8px;}
   .note{font-size:12px;color:var(--muted);margin-bottom:14px;}
+  textarea, input{font-family:inherit;}
   ::selection{background:var(--chalk);color:#111;}
 </style>
 </head>
@@ -154,8 +142,48 @@
     </div>
   </div>
 
+  <!-- SETUP VIEW (first run only) -->
+  <div class="view" id="view-setup">
+    <h2 class="section-title" style="margin-top:16px">Quick Setup</h2>
+    <div class="note">Takes about a minute. This tailors the plan to your equipment, goals and starting numbers — all of it can be changed later from Plan or Library.</div>
+
+    <div class="section-title">Equipment access</div>
+    <div class="segrow" id="setupEquipSeg"></div>
+    <div id="setupMachinesWrap" style="display:none">
+      <div class="note" style="margin-top:-8px">List the machines your gym actually has (one per line) so suggestions stay accurate — e.g. Leg Press, Chest Press, Shoulder Press, Seated Row, Leg Extension, Pec Deck</div>
+      <textarea id="setupMachinesList" placeholder="Leg Press&#10;Chest Press Machine&#10;Seated Row Machine&#10;..." style="width:100%;min-height:80px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;font-size:13px;margin-bottom:14px;resize:vertical"></textarea>
+    </div>
+
+    <div class="section-title">Squat pattern</div>
+    <div class="segrow" id="setupSquatSeg"></div>
+    <div class="section-title">Bench pattern</div>
+    <div class="segrow" id="setupBenchSeg"></div>
+    <div class="section-title">Overhead pressing</div>
+    <div class="segrow" id="setupOhpSeg"></div>
+    <div class="section-title">Main pulling row</div>
+    <div class="segrow" id="setupRowSeg"></div>
+    <div class="section-title">Hip hinge (hamstrings)</div>
+    <div class="segrow" id="setupRdlSeg"></div>
+
+    <div class="section-title">Sessions per week to start</div>
+    <div class="segrow" id="setupSessionsSeg"></div>
+
+    <div class="section-title">Training goal</div>
+    <div class="segrow" id="setupGoalSeg"></div>
+
+    <div class="section-title">Progression pace</div>
+    <div class="segrow" id="setupPaceSeg"></div>
+
+    <div class="section-title">Starting weights (kg)</div>
+    <div class="info-card">
+      <div id="setupWeights"></div>
+    </div>
+
+    <div class="btn logged" id="setupStartBtn" style="margin-bottom:20px">Start my program</div>
+  </div>
+
   <!-- TODAY VIEW -->
-  <div class="view active" id="view-today">
+  <div class="view" id="view-today">
     <div class="weeknav">
       <button id="prevWeek">‹</button>
       <div class="weektitle">
@@ -171,7 +199,7 @@
     </div>
 
     <div class="segrow" id="sessionSeg"></div>
-    <div class="seg-caption">Sessions this week — adjusts the split automatically</div>
+    <div class="seg-caption" id="segCaption">Sessions this week — adjusts the split automatically</div>
 
     <div class="barwrap">
       <div class="label"><span>SESSION LOAD</span><span id="barPct">0/0</span></div>
@@ -194,41 +222,39 @@
       <div class="plan-row"><span>Block 3</span><span>Weeks 11–16 · Hold</span></div>
     </div>
 
-    <h2 class="section-title">Split</h2>
+    <h2 class="section-title">Split changes with sessions/week</h2>
     <div class="info-card">
-      <div class="plan-row"><span>Style</span><span>Push / Pull (no dedicated leg day)</span></div>
-      <div class="plan-row"><span>2 sessions</span><span>Push, Pull</span></div>
-      <div class="plan-row"><span>3 sessions</span><span>Push, Pull, Push</span></div>
-      <div class="plan-row"><span>4 sessions</span><span>Push, Pull, Push, Pull</span></div>
-      <div class="plan-row"><span>Push covers</span><span>Chest, shoulders, triceps, quads</span></div>
-      <div class="plan-row"><span>Pull covers</span><span>Back, biceps, hamstrings</span></div>
+      <div class="plan-row"><span>2 sessions</span><span>Push compounds, Pull compounds</span></div>
+      <div class="plan-row"><span>3 sessions</span><span>+ an accessory day for whatever's untrained</span></div>
+      <div class="plan-row"><span>4 sessions</span><span>Push A/B, Pull A/B — full split</span></div>
     </div>
 
-    <h2 class="section-title">How progression works</h2>
-    <div class="info-card" style="font-size:13px;line-height:1.6;color:var(--muted)">
-      Lock in the reps you actually get on every set. Hit the target range on all sets → weight goes up next time.<br>
-      Fall short on any set → repeat the same weight.<br>
-      Miss two sessions running on a lift → drops 5% and builds back up.<br>
-      Deload weeks (5 &amp; 10, or any week you flag as "feeling wiped") auto-load at 60%, 2 sets, no progression — just move and recover.
+    <h2 class="section-title">Program Settings</h2>
+    <div class="info-card">
+      <div class="note" style="margin-bottom:10px">Change anytime — affects sets/reps and weight jumps on your next lock-in, nothing retroactive.</div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Training goal</div>
+      <div class="segrow" id="planGoalSeg" style="margin-bottom:14px"></div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Progression pace</div>
+      <div class="segrow" id="planPaceSeg"></div>
     </div>
 
     <h2 class="section-title">Adjusting on the fly</h2>
     <div class="info-card" style="font-size:13px;line-height:1.6;color:var(--muted)">
       "Short on time" trims sets and drops any exercise whose muscle group is already covered elsewhere this week.<br>
       Any exercise can be skipped for just today — it'll come back on its normal day next time.<br>
-      On a 4-session week, the "add exercise" list flags a lift with ⚠️ if it'd be the 3rd time that muscle group gets trained that week.<br>
-      On a 2-session week, you'll see suggested add-ons for muscle groups Push/Pull don't otherwise cover (glutes, calves).
+      On a 4-session week, the "add exercise" list flags a lift with ⚠️ if it'd be the 3rd time that muscle group gets trained that week.
     </div>
   </div>
 
   <!-- STRENGTH VIEW -->
   <div class="view" id="view-strength">
     <h2 class="section-title" style="margin-top:16px">Estimated 1RM</h2>
-    <div class="note">Calculated from your heaviest logged set each week (Epley formula). "Deadlift" here is your Romanian Deadlift work — not a conventional deadlift.</div>
+    <div class="note">Calculated from your heaviest logged set each week (Epley formula).</div>
     <div class="stat-grid">
       <div class="stat"><div class="num" id="e1rmSquat">–</div><div class="lbl">Squat kg</div></div>
       <div class="stat"><div class="num" id="e1rmBench">–</div><div class="lbl">Bench kg</div></div>
-      <div class="stat"><div class="num" id="e1rmRdl">–</div><div class="lbl">Deadlift (RDL) kg</div></div>
+      <div class="stat"><div class="num" id="e1rmRdl">–</div><div class="lbl">RDL kg</div></div>
+      <div class="stat"><div class="num" id="e1rmDeadlift">–</div><div class="lbl">Deadlift kg</div></div>
     </div>
     <div class="strength-table" id="strengthTable">
       <div class="st-row head"><span>Week</span><span>Squat</span><span>Bench</span><span>RDL</span></div>
@@ -242,35 +268,14 @@
   <!-- LIBRARY VIEW -->
   <div class="view" id="view-library">
     <h2 class="section-title" style="margin-top:16px">Exercise Library</h2>
-    <div class="note">Program lifts drive the weekly split and can't be removed (but can be skipped for a single day from Today). Starter and custom exercises can be hidden or deleted if you never use them — this only affects the "add exercise" list, past logs stay intact.</div>
+    <div class="note">Tap any exercise for a form tip and a video link. Program lifts drive the weekly split and can't be removed (but can be skipped for a single day from Today). Starter and custom exercises can be hidden or deleted.</div>
     <div id="libraryContent"></div>
-  </div>
 
-  <!-- PROGRESS VIEW -->
-  <div class="view" id="view-progress">
-    <h2 class="section-title" style="margin-top:16px">Dashboard</h2>
-    <div class="stat-grid">
-      <div class="stat"><div class="num" id="statCurrent">–</div><div class="lbl">Current kg</div></div>
-      <div class="stat"><div class="num" id="statLost">–</div><div class="lbl">Lost so far</div></div>
-      <div class="stat"><div class="num" id="statToGo">–</div><div class="lbl">Kg to goal</div></div>
-      <div class="stat"><div class="num" id="statWeeksLeft">–</div><div class="lbl">Weeks left</div></div>
-    </div>
-
-    <div class="chart" id="chartWrap" style="display:none">
-      <div class="section-title" style="margin:0 0 8px">Bodyweight trend</div>
-      <svg id="chartSvg" viewBox="0 0 300 100" preserveAspectRatio="none"></svg>
-    </div>
-
-    <h2 class="section-title">Log this week</h2>
-    <div class="log-form">
-      <input type="number" step="0.1" id="inputWeight" placeholder="Weight kg">
-      <input type="number" step="0.5" id="inputWaist" placeholder="Waist cm">
-      <button id="saveProgress">Save</button>
-    </div>
-
-    <h2 class="section-title">History</h2>
-    <div class="history" id="historyList">
-      <div class="empty">No entries yet</div>
+    <h2 class="section-title">Your Gym's Machines</h2>
+    <div class="info-card">
+      <div class="note" style="margin-bottom:10px">Used to flag machine exercises you may not actually have access to.</div>
+      <textarea id="gymMachinesList" placeholder="Leg Press&#10;Chest Press Machine&#10;..." style="width:100%;min-height:70px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;font-size:13px;margin-bottom:10px;resize:vertical"></textarea>
+      <div class="btn logged" id="saveMachinesBtn">Save</div>
     </div>
 
     <h2 class="section-title">Backup</h2>
@@ -289,7 +294,6 @@
     <div class="navbtn" data-view="plan"><span class="ico">📋</span>Plan</div>
     <div class="navbtn" data-view="strength"><span class="ico">💪</span>Strength</div>
     <div class="navbtn" data-view="library"><span class="ico">📚</span>Library</div>
-    <div class="navbtn" data-view="progress"><span class="ico">📈</span>Progress</div>
   </div>
 </div>
 
@@ -297,75 +301,136 @@
 /* ---------------- MUSCLE GROUPS ---------------- */
 const ALL_MUSCLES = ['chest','back','shoulders','biceps','triceps','quads','hamstrings','glutes','calves'];
 
-/* ---------------- PROGRAM EXERCISES (structural — drive Push/Pull) ---------------- */
+/* ---------------- PROGRAM EXERCISES (structural — drive the split) ---------------- */
+/* equipmentType: barbell | dumbbell | cable | machine | bodyweight
+   cue: one-line form tip. video link is auto-generated from the name. */
 const EX = {
-  bench:      {id:'bench', name:'Bench Press', startWeight:70, sets:4, repMin:4, repMax:6, inc:2.5, muscle:'chest'},
-  ohp:        {id:'ohp', name:'Overhead Press', startWeight:40, sets:3, repMin:5, repMax:6, inc:2.5, muscle:'shoulders'},
-  inclineDB1: {id:'inclineDB1', name:'Incline DB Press', startWeight:30, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'chest'},
-  squat:      {id:'squat', name:'Back Squat', startWeight:75, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'quads'},
-  lateral:    {id:'lateral', name:'Lateral Raise', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'shoulders'},
-  pushdown:   {id:'pushdown', name:'Triceps Pushdown', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps'},
-  row:        {id:'row', name:'Barbell Row', startWeight:60, sets:4, repMin:8, repMax:10, inc:2.5, muscle:'back'},
-  pulldown1:  {id:'pulldown1', name:'Lat Pulldown', startWeight:65, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'back'},
-  rdl:        {id:'rdl', name:'Romanian Deadlift', startWeight:80, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'hamstrings'},
-  legCurl:    {id:'legCurl', name:'Seated Leg Curl', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'hamstrings'},
-  curl:       {id:'curl', name:'Bicep Curl', startWeight:25, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps'},
+  bench:      {id:'bench', name:'Bench Press', startWeight:70, sets:4, repMin:4, repMax:6, inc:2.5, muscle:'chest', equipmentType:'barbell', cue:'Shoulder blades pinned back, bar to lower chest, drive feet into the floor.'},
+  ohp:        {id:'ohp', name:'Overhead Press', startWeight:40, sets:3, repMin:5, repMax:6, inc:2.5, muscle:'shoulders', equipmentType:'barbell', cue:'Brace your core, press straight up, head through at the top.'},
+  inclineDB1: {id:'inclineDB1', name:'Incline DB Press', startWeight:30, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'chest', equipmentType:'dumbbell', cue:'30-45° bench, press up and slightly in, control the lowering.'},
+  inclineDB2: {id:'inclineDB2', name:'Incline DB Press (volume)', startWeight:27.5, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'chest', equipmentType:'dumbbell', cue:'Same setup as the strength version, lighter and higher reps.'},
+  squat:      {id:'squat', name:'Back Squat', startWeight:75, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'quads', equipmentType:'barbell', cue:'Bar on upper traps, knees track over toes, hips and chest rise together.'},
+  frontSquat: {id:'frontSquat', name:'Front Squat', startWeight:60, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'quads', equipmentType:'barbell', cue:'Bar across front delts, elbows high, stay upright through the descent.'},
+  lateral:    {id:'lateral', name:'Lateral Raise', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'shoulders', equipmentType:'dumbbell', cue:'Slight bend in elbows, raise to shoulder height, lead with the elbows.'},
+  cableUprightRow: {id:'cableUprightRow', name:'Cable Upright Row', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'shoulders', equipmentType:'cable', cue:'Pull to chest height, elbows out and slightly ahead of the bar.'},
+  pushdown:   {id:'pushdown', name:'Triceps Pushdown', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps', equipmentType:'cable', cue:'Elbows pinned to your sides, extend fully, control the return.'},
+  dbSkullcrusher: {id:'dbSkullcrusher', name:'Dumbbell Skullcrusher', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'triceps', equipmentType:'dumbbell', cue:'Elbows fixed pointing up, lower to the forehead, extend back up.'},
+  row:        {id:'row', name:'Barbell Row', startWeight:60, sets:4, repMin:8, repMax:10, inc:2.5, muscle:'back', equipmentType:'barbell', cue:'Hinge at the hips, pull the bar to your lower ribs, squeeze at the top.'},
+  cableRow:   {id:'cableRow', name:'Cable Row', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back', equipmentType:'cable', cue:'Chest up, pull to your stomach, pause briefly at full contraction.'},
+  pulldown1:  {id:'pulldown1', name:'Lat Pulldown', startWeight:65, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'back', equipmentType:'cable', cue:'Pull to upper chest, lead with the elbows, avoid leaning back excessively.'},
+  pulldown2:  {id:'pulldown2', name:'Lat Pulldown (reverse grip)', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back', equipmentType:'cable', cue:'Underhand grip, pull to upper chest, keep elbows close to the body.'},
+  cableFacePull: {id:'cableFacePull', name:'Cable Face Pull', startWeight:20, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'shoulders', equipmentType:'cable', cue:'Rope to face height, pull apart at the end, elbows high.'},
+  rdl:        {id:'rdl', name:'Romanian Deadlift', startWeight:80, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'hamstrings', equipmentType:'barbell', cue:'Soft knees, push hips back, bar stays close to your legs throughout.'},
+  deadlift:   {id:'deadlift', name:'Deadlift', startWeight:100, sets:4, repMin:5, repMax:6, inc:2.5, muscle:'hamstrings', equipmentType:'barbell', cue:'Bar over midfoot, flat back, drive through the floor to stand tall.'},
+  legCurl:    {id:'legCurl', name:'Seated Leg Curl', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'hamstrings', equipmentType:'machine', cue:'Curl through full range, control the weight back up, avoid hips rising.'},
+  curl:       {id:'curl', name:'Bicep Curl', startWeight:25, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps', equipmentType:'dumbbell', cue:'Elbows fixed at your sides, curl without swinging the torso.'},
+  dbHammerCurl: {id:'dbHammerCurl', name:'Dumbbell Hammer Curl', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'biceps', equipmentType:'dumbbell', cue:'Neutral (palms-in) grip throughout, curl under control.'},
 };
 
-/* ---------------- STARTER LIBRARY (cable/dumbbell add-ons + former program lifts, not part of the default split) ---------------- */
+/* ---------------- STARTER LIBRARY (optional add-ons, includes machine alternatives) ---------------- */
 const LIBRARY = {
-  lunge:                {id:'lunge', name:'Walking Lunge', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
-  calves:               {id:'calves', name:'Calf Raise', startWeight:40, sets:4, repMin:12, repMax:15, inc:5, muscle:'calves'},
-  gobletSquat:          {id:'gobletSquat', name:'Goblet Squat', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
-  cableRow:             {id:'cableRow', name:'Cable Row', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
-  pulldown2:            {id:'pulldown2', name:'Lat Pulldown (wide grip)', startWeight:60, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'back'},
-  inclineDB2:           {id:'inclineDB2', name:'Incline DB Press (volume)', startWeight:27.5, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'chest'},
-  cableTricepOverhead:  {id:'cableTricepOverhead', name:'Cable Overhead Tricep Extension', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps'},
-  cableFly:             {id:'cableFly', name:'Cable Fly', startWeight:15, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'chest'},
-  dbChestFly:           {id:'dbChestFly', name:'Dumbbell Chest Fly', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'chest'},
-  cableFacePull:        {id:'cableFacePull', name:'Cable Face Pull', startWeight:20, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'shoulders'},
-  cableUprightRow:      {id:'cableUprightRow', name:'Cable Upright Row', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'shoulders'},
-  dbShoulderPress:      {id:'dbShoulderPress', name:'Dumbbell Shoulder Press', startWeight:20, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'shoulders'},
-  dbSkullcrusher:       {id:'dbSkullcrusher', name:'Dumbbell Skullcrusher', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'triceps'},
-  cableCurl:            {id:'cableCurl', name:'Cable Bicep Curl', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps'},
-  dbHammerCurl:         {id:'dbHammerCurl', name:'Dumbbell Hammer Curl', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'biceps'},
-  dbStepUp:             {id:'dbStepUp', name:'Dumbbell Step Up', startWeight:16, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads'},
-  dbRDL:                {id:'dbRDL', name:'Dumbbell Romanian Deadlift', startWeight:24, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'hamstrings'},
-  cableKickback:        {id:'cableKickback', name:'Cable Glute Kickback', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'glutes'},
-  dbLunge:              {id:'dbLunge', name:'Dumbbell Reverse Lunge', startWeight:16, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'glutes'},
-  cableSeatedCalf:      {id:'cableSeatedCalf', name:'Seated Calf Raise', startWeight:30, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'calves'},
+  lunge:                {id:'lunge', name:'Walking Lunge', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads', equipmentType:'dumbbell', cue:'Long step, back knee toward the floor, drive through the front heel.'},
+  calves:               {id:'calves', name:'Calf Raise', startWeight:40, sets:4, repMin:12, repMax:15, inc:5, muscle:'calves', equipmentType:'machine', cue:'Full stretch at the bottom, rise onto toes, pause at the top.'},
+  gobletSquat:          {id:'gobletSquat', name:'Goblet Squat', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads', equipmentType:'dumbbell', cue:'Hold the weight at chest height, squat between your knees.'},
+  cableTricepOverhead:  {id:'cableTricepOverhead', name:'Cable Overhead Tricep Extension', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'triceps', equipmentType:'cable', cue:'Rope behind your head, extend fully overhead, elbows stay fixed.'},
+  cableFly:             {id:'cableFly', name:'Cable Fly', startWeight:15, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'chest', equipmentType:'cable', cue:'Slight bend in elbows, bring hands together in a hugging motion.'},
+  dbChestFly:           {id:'dbChestFly', name:'Dumbbell Chest Fly', startWeight:12, sets:3, repMin:10, repMax:12, inc:2, muscle:'chest', equipmentType:'dumbbell', cue:'Slight elbow bend, lower in an arc, squeeze back to the top.'},
+  dbShoulderPress:      {id:'dbShoulderPress', name:'Dumbbell Shoulder Press', startWeight:20, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'shoulders', equipmentType:'dumbbell', cue:'Press up and slightly in, avoid flaring elbows too wide.'},
+  cableCurl:            {id:'cableCurl', name:'Cable Bicep Curl', startWeight:20, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'biceps', equipmentType:'cable', cue:'Constant tension throughout — don\'t let the weight stack rest between reps.'},
+  dbStepUp:             {id:'dbStepUp', name:'Dumbbell Step Up', startWeight:16, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads', equipmentType:'dumbbell', cue:'Drive through the lead heel, avoid pushing off the trailing leg.'},
+  dbRDL:                {id:'dbRDL', name:'Dumbbell Romanian Deadlift', startWeight:24, sets:3, repMin:8, repMax:10, inc:2.5, muscle:'hamstrings', equipmentType:'dumbbell', cue:'Same hip-hinge pattern as barbell RDL, dumbbells close to your legs.'},
+  cableKickback:        {id:'cableKickback', name:'Cable Glute Kickback', startWeight:10, sets:3, repMin:12, repMax:15, inc:2, muscle:'glutes', equipmentType:'cable', cue:'Slight forward lean, kick back and squeeze the glute at the top.'},
+  dbLunge:              {id:'dbLunge', name:'Dumbbell Reverse Lunge', startWeight:16, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'glutes', equipmentType:'dumbbell', cue:'Step back rather than forward — easier on the knees, more glute focus.'},
+  cableSeatedCalf:      {id:'cableSeatedCalf', name:'Seated Calf Raise', startWeight:30, sets:3, repMin:12, repMax:15, inc:2.5, muscle:'calves', equipmentType:'machine', cue:'Seated, knees bent, full stretch and squeeze through the ankle.'},
+  legPressMachine:      {id:'legPressMachine', name:'Leg Press', startWeight:100, sets:4, repMin:8, repMax:10, inc:5, muscle:'quads', equipmentType:'machine', cue:'Feet shoulder width on the platform, don\'t lock knees out hard at the top.'},
+  machineChestPress:    {id:'machineChestPress', name:'Chest Press Machine', startWeight:40, sets:4, repMin:6, repMax:8, inc:2.5, muscle:'chest', equipmentType:'machine', cue:'Seat height so handles sit mid-chest, press without flaring elbows up.'},
+  shoulderPressMachine: {id:'shoulderPressMachine', name:'Shoulder Press Machine', startWeight:25, sets:3, repMin:6, repMax:8, inc:2.5, muscle:'shoulders', equipmentType:'machine', cue:'Handles start level with shoulders, press up without arching your back.'},
+  seatedRowMachine:     {id:'seatedRowMachine', name:'Seated Row Machine', startWeight:40, sets:4, repMin:8, repMax:10, inc:2.5, muscle:'back', equipmentType:'machine', cue:'Chest against the pad, pull to your torso, squeeze shoulder blades together.'},
+  legExtensionMachine:  {id:'legExtensionMachine', name:'Leg Extension', startWeight:30, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'quads', equipmentType:'machine', cue:'Pad on your shins, extend fully, control the weight back down.'},
+  pecDeckMachine:       {id:'pecDeckMachine', name:'Pec Deck / Chest Fly Machine', startWeight:25, sets:3, repMin:10, repMax:12, inc:2.5, muscle:'chest', equipmentType:'machine', cue:'Pads at chest height, bring arms together, control the return.'},
 };
 
-/* ---------------- SESSION TEMPLATES: PUSH / PULL (no dedicated leg day) ---------------- */
-const SESSIONS = {
-  push: {label:'Push', ex:['bench','ohp','inclineDB1','squat','lateral','pushdown']},
-  pull: {label:'Pull', ex:['row','pulldown1','rdl','legCurl','curl']},
-};
+/* ---------------- SESSION CONTENT — differs by how many sessions this week ---------------- */
+const PUSH_COMPOUND = {label:'Push (Compounds)', ex:['squat','bench','ohp']};
+const PULL_COMPOUND = {label:'Pull (Compounds)', ex:['rdl','row','pulldown1']};
+
+const PUSH_VARIANTS = [
+  {label:'Push A', ex:['squat','bench','inclineDB1','lateral','dbSkullcrusher']},
+  {label:'Push B', ex:['frontSquat','ohp','cableUprightRow','inclineDB2','pushdown']},
+];
+const PULL_VARIANTS = [
+  {label:'Pull A', ex:['rdl','row','pulldown1','legCurl','curl']},
+  {label:'Pull B', ex:['deadlift','cableRow','pulldown2','cableFacePull','dbHammerCurl']},
+];
+
 const SPLITS = {
-  2: ['push','pull'],
-  3: ['push','pull','push'],
+  2: ['pushC','pullC'],
+  3: ['pushC','pullC','accessory'],
   4: ['push','pull','push','pull'],
 };
 
-/* ---------------- SUPERSET HINTS (non-competing pairs within the same day, for speed) ---------------- */
+function accessoryDayIds(){
+  const covered = new Set();
+  resolvePrefs(PUSH_COMPOUND.ex.concat(PULL_COMPOUND.ex)).forEach(id=>{
+    const d = getExDef(id);
+    if(d) covered.add(d.muscle);
+  });
+  const missing = ALL_MUSCLES.filter(m=>!covered.has(m));
+  return missing.map(m => suggestedExerciseForMuscle(m, new Set())).filter(Boolean).map(d=>d.id);
+}
+
+/* ---------------- SUPERSET HINTS ---------------- */
 const SUPERSET_PAIRS = {
-  squat:'bench', bench:'squat',
-  ohp:'lateral', lateral:'ohp',
-  inclineDB1:'pushdown', pushdown:'inclineDB1',
-  row:'legCurl', legCurl:'row',
-  pulldown1:'rdl', rdl:'pulldown1',
+  squat:['bench'], bench:['squat','frontSquat'], frontSquat:['ohp'], legPressMachine:['machineChestPress'], machineChestPress:['legPressMachine'],
+  ohp:['lateral','cableUprightRow'], lateral:['ohp'], cableUprightRow:['frontSquat'],
+  inclineDB1:['pushdown'], pushdown:['inclineDB1'], dbSkullcrusher:['inclineDB2'], inclineDB2:['dbSkullcrusher'],
+  row:['legCurl'], legCurl:['row'], pulldown1:['rdl'], rdl:['pulldown1'],
+  cableRow:['deadlift'], deadlift:['cableRow'], pulldown2:['cableFacePull'], cableFacePull:['pulldown2'],
+  dbHammerCurl:['pulldown2'], seatedRowMachine:['legCurl'],
 };
 
 const TOTAL_WEEKS = 16;
-const GOAL_START = 92, GOAL_END_HIGH = 84;
-const STRENGTH_IDS = ['squat','bench','rdl'];
-const WARMUP_IDS = ['bench','squat','rdl','ohp'];
+const STRENGTH_IDS = ['squat','bench','rdl','deadlift'];
+const WARMUP_IDS = ['bench','squat','frontSquat','rdl','deadlift','ohp','row','legPressMachine','machineChestPress'];
 const BAR_WEIGHT = 20;
+
+const COMPOUND_IDS = new Set(['bench','ohp','dbShoulderPress','shoulderPressMachine','squat','frontSquat','legPressMachine','machineChestPress','rdl','dbRDL','deadlift','row','cableRow','seatedRowMachine']);
+const GOAL_PROFILES = {
+  strength:  {label:'Strength (low reps, heavy)',       compound:{sets:5, repMin:3, repMax:5},  accessory:{sets:3, repMin:6,  repMax:8}},
+  balanced:  {label:'Balanced (muscle + strength)',     compound:{sets:4, repMin:6, repMax:8},  accessory:{sets:3, repMin:10, repMax:12}},
+  endurance: {label:'Endurance (higher reps, lighter)', compound:{sets:3, repMin:10,repMax:12}, accessory:{sets:3, repMin:15, repMax:20}},
+};
+const PROGRESSION_SCALES = {
+  conservative: {label:'Conservative', mult:0.5},
+  standard:     {label:'Standard', mult:1},
+  aggressive:   {label:'Aggressive', mult:1.5},
+};
+
+function effectiveDef(id){
+  const def = getExDef(id);
+  if(!def) return null;
+  if(customEx[id]) return def;
+  const profile = GOAL_PROFILES[meta.goalProfile || 'balanced'];
+  const bucket = COMPOUND_IDS.has(id) ? profile.compound : profile.accessory;
+  return Object.assign({}, def, {sets: bucket.sets, repMin: bucket.repMin, repMax: bucket.repMax});
+}
 
 function warmupLine(weight){
   const w1 = Math.max(BAR_WEIGHT, Math.round((weight*0.5)/2.5)*2.5);
   const w2 = Math.max(BAR_WEIGHT, Math.round((weight*0.7)/2.5)*2.5);
   return `${BAR_WEIGHT}kg×10, ${w1}kg×5, ${w2}kg×3`;
+}
+function videoSearchUrl(name){
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(name + ' exercise proper form');
+}
+function machineAvailable(def){
+  if(def.equipmentType !== 'machine') return true;
+  if(!meta.availableMachines || meta.availableMachines.length===0) return true;
+  const name = def.name.toLowerCase();
+  return meta.availableMachines.some(m => {
+    const ml = m.toLowerCase().trim();
+    return ml && (name.includes(ml) || ml.includes(name.split(' ')[0]));
+  });
 }
 
 function phaseForWeek(w){
@@ -378,15 +443,15 @@ function phaseForWeek(w){
 
 /* ---------------- STATE ---------------- */
 let exState = {};
-let progressLog = [];
 let meta = {currentWeek:1, sessions:{}, manualDeload:{}};
-let customEx = {};        // personal exercise library
-let extras = {};          // per session: {logKey: [exerciseId, ...]}
-let skips = {};           // per session: {logKey: [exerciseId, ...]} — program lifts skipped just for today
-let shortSessions = {};   // per session: {logKey: true}
-let sessionNotes = {};    // per session: {logKey: 'text'}
-let hiddenLibrary = [];   // starter LIBRARY ids the user has hidden
-let pending = {};         // in-progress (not yet fully locked) sets: {logKey+'|'+id: {reps:[], locked:[], weight}}
+let customEx = {};
+let extras = {};
+let skips = {};
+let shortSessions = {};
+let sessionNotes = {};
+let hiddenLibrary = [];
+let pending = {};
+let prefs = {ohp:'ohp', row:'row', rdl:'rdl', squat:'squat', bench:'bench'};
 let currentWeek = 1;
 let currentTplIndex = 0;
 
@@ -402,7 +467,6 @@ function lsSet(key, val){
 
 async function loadState(){
   exState = lsGet('exercise-state') || {};
-  progressLog = lsGet('progress-log') || [];
   meta = Object.assign({currentWeek:1, sessions:{}, manualDeload:{}}, lsGet('meta') || {});
   customEx = lsGet('custom-exercises') || {};
   extras = lsGet('session-extras') || {};
@@ -411,10 +475,10 @@ async function loadState(){
   sessionNotes = lsGet('session-notes') || {};
   hiddenLibrary = lsGet('hidden-library') || [];
   pending = lsGet('pending-sets') || {};
+  prefs = Object.assign({ohp:'ohp', row:'row', rdl:'rdl', squat:'squat', bench:'bench'}, lsGet('prefs') || {});
   currentWeek = meta.currentWeek || 1;
 }
 async function saveExState(){ lsSet('exercise-state', exState); }
-async function saveProgressLog(){ lsSet('progress-log', progressLog); }
 async function saveMeta(){ meta.currentWeek = currentWeek; lsSet('meta', meta); }
 async function saveCustomEx(){ lsSet('custom-exercises', customEx); }
 async function saveExtras(){ lsSet('session-extras', extras); }
@@ -423,9 +487,10 @@ async function saveShortSessions(){ lsSet('short-sessions', shortSessions); }
 async function saveSessionNotes(){ lsSet('session-notes', sessionNotes); }
 async function saveHiddenLibrary(){ lsSet('hidden-library', hiddenLibrary); }
 async function savePending(){ lsSet('pending-sets', pending); }
+async function savePrefs(){ lsSet('prefs', prefs); }
 
 function allStateKeys(){
-  return ['exercise-state','progress-log','meta','custom-exercises','session-extras','session-skips','short-sessions','session-notes','hidden-library'];
+  return ['exercise-state','meta','custom-exercises','session-extras','session-skips','short-sessions','session-notes','hidden-library','prefs'];
 }
 function exportData(){
   const data = {};
@@ -462,20 +527,57 @@ function getExState(id){
 }
 function sessionsThisWeek(week){ return meta.sessions[week] || 3; }
 function templateKeysForWeek(week){ return SPLITS[sessionsThisWeek(week)]; }
+
+function resolvePrefs(exList){
+  return exList.map(id=>{
+    if(id==='ohp') return prefs.ohp;
+    if(id==='row') return prefs.row;
+    if(id==='rdl') return prefs.rdl;
+    if(id==='squat') return prefs.squat;
+    if(id==='bench') return prefs.bench;
+    return id;
+  });
+}
+
+function variantIndexFor(baseType, week, idx){
+  let count = 0;
+  for(let w=1; w<week; w++){
+    count += SPLITS[sessionsThisWeek(w)].filter(k=>k===baseType).length;
+  }
+  const keysThisWeek = templateKeysForWeek(week);
+  for(let i=0;i<idx;i++){
+    if(keysThisWeek[i]===baseType) count++;
+  }
+  return count % 2;
+}
+function dayDef(baseType, week, idx){
+  let def;
+  if(baseType==='pushC') def = PUSH_COMPOUND;
+  else if(baseType==='pullC') def = PULL_COMPOUND;
+  else if(baseType==='accessory') return {label:'Accessory', ex: accessoryDayIds()};
+  else {
+    const variants = baseType==='push' ? PUSH_VARIANTS : PULL_VARIANTS;
+    def = variants[variantIndexFor(baseType, week, idx)];
+  }
+  return {label: def.label, ex: resolvePrefs(def.ex)};
+}
+
 function weekDayList(week){
-  return templateKeysForWeek(week).map(k=>({tplKey:k, logKey:'w'+week+'-'+k}));
+  return templateKeysForWeek(week).map((tplKey, idx) => ({
+    tplKey, idx, logKey: 'w'+week+'-'+tplKey+idx
+  }));
 }
-function baseSessionIds(tplKey, logKey){
+function baseSessionIds(week, tplKey, idx, logKey){
   const skipped = skips[logKey] || [];
-  return SESSIONS[tplKey].ex.concat(extras[logKey] || []).filter(id => !skipped.includes(id));
+  return dayDef(tplKey, week, idx).ex.concat(extras[logKey] || []).filter(id => !skipped.includes(id));
 }
-function sessionExerciseIds(tplKey, logKey){
-  let ids = baseSessionIds(tplKey, logKey);
+function sessionExerciseIds(week, tplKey, idx, logKey){
+  let ids = baseSessionIds(week, tplKey, idx, logKey);
   if(shortSessions[logKey]){
-    ids = ids.filter((id, idx) => {
-      if(idx === 0) return true; // always keep the day's primary lift
+    ids = ids.filter((id, i) => {
+      if(i === 0) return true;
       const def = getExDef(id);
-      return muscleCountThisWeek(currentWeek, def.muscle, logKey) === 0;
+      return muscleCountThisWeek(week, def.muscle, logKey) === 0;
     });
   }
   return ids;
@@ -487,14 +589,14 @@ function targetWeightFor(id, week){
 }
 function targetSetsFor(id, week, logKey){
   if(phaseForWeek(week).key==='deload') return 2;
-  let sets = getExDef(id).sets;
+  let sets = effectiveDef(id).sets;
   if(shortSessions[logKey]) sets = Math.max(2, Math.ceil(sets/2));
   return sets;
 }
 
 /* ---------------- FATIGUE / SUGGESTION HELPERS ---------------- */
-function muscleCoveredOnDay(tplKey, logKey, muscle){
-  return baseSessionIds(tplKey, logKey).some(id=>{
+function muscleCoveredOnDay(week, tplKey, idx, logKey, muscle){
+  return baseSessionIds(week, tplKey, idx, logKey).some(id=>{
     const d = getExDef(id);
     return d && d.muscle === muscle;
   });
@@ -503,22 +605,17 @@ function muscleCountThisWeek(week, muscle, excludeLogKey){
   let count = 0;
   weekDayList(week).forEach(d=>{
     if(d.logKey === excludeLogKey) return;
-    if(muscleCoveredOnDay(d.tplKey, d.logKey, muscle)) count++;
+    if(muscleCoveredOnDay(week, d.tplKey, d.idx, d.logKey, muscle)) count++;
   });
   return count;
 }
-function missingMusclesThisWeek(week){
-  const covered = new Set();
-  weekDayList(week).forEach(d=>{
-    baseSessionIds(d.tplKey, d.logKey).forEach(id=>{
-      const def = getExDef(id);
-      if(def) covered.add(def.muscle);
-    });
-  });
-  return ALL_MUSCLES.filter(m => !covered.has(m));
-}
 function suggestedExerciseForMuscle(muscle, excludeIds){
   const pools = [EX, LIBRARY];
+  for(const pool of pools){
+    const hit = Object.values(pool).find(e => e.muscle===muscle && !excludeIds.has(e.id) && !hiddenLibrary.includes(e.id) && machineAvailable(e));
+    if(hit) return hit;
+  }
+  // fall back to ignoring the machine-availability filter rather than leaving a gap
   for(const pool of pools){
     const hit = Object.values(pool).find(e => e.muscle===muscle && !excludeIds.has(e.id) && !hiddenLibrary.includes(e.id));
     if(hit) return hit;
@@ -542,6 +639,12 @@ function renderSessionSeg(){
     };
     wrap.appendChild(el);
   });
+  const capText = {
+    2: 'Compound focus only',
+    3: 'Compounds + an accessory day for whatever\'s untrained',
+    4: 'Full Push A/B, Pull A/B split'
+  };
+  document.getElementById('segCaption').textContent = capText[sessionsThisWeek(currentWeek)];
 }
 
 function renderTiredBtn(){
@@ -578,7 +681,7 @@ function renderDayTabs(){
   keys.forEach((k,i)=>{
     const el = document.createElement('div');
     el.className = 'daytab' + (i===currentTplIndex ? ' active':'');
-    el.textContent = SESSIONS[k].label + (keys.filter(x=>x===k).length>1 ? ' '+(keys.slice(0,i+1).filter(x=>x===k).length) : '');
+    el.textContent = dayDef(k, currentWeek, i).label;
     el.onclick = ()=>{ currentTplIndex = i; renderAll(); };
     wrap.appendChild(el);
   });
@@ -587,12 +690,13 @@ function renderDayTabs(){
 function currentLogKey(){
   const keys = templateKeysForWeek(currentWeek);
   const tplKey = keys[currentTplIndex];
-  return {tplKey, logKey: 'w'+currentWeek+'-'+tplKey};
+  const idx = currentTplIndex;
+  return {tplKey, idx, logKey: 'w'+currentWeek+'-'+tplKey+idx};
 }
 
 function renderBar(){
-  const {tplKey, logKey} = currentLogKey();
-  const ids = sessionExerciseIds(tplKey, logKey);
+  const {tplKey, idx, logKey} = currentLogKey();
+  const ids = sessionExerciseIds(currentWeek, tplKey, idx, logKey);
   const row = document.getElementById('plateRow');
   row.innerHTML = '';
   let done=0, missed=0;
@@ -634,7 +738,8 @@ async function finalizeExercise(id, logKey, def){
 
   if(phaseForWeek(currentWeek).key !== 'deload'){
     if(hit){
-      st.weight = p.weight + def.inc;
+      const scale = (PROGRESSION_SCALES[meta.progressionScale]||PROGRESSION_SCALES.standard).mult;
+      st.weight = p.weight + def.inc * scale;
       st.missStreak = 0;
     } else {
       st.missStreak = (st.missStreak||0) + 1;
@@ -650,35 +755,37 @@ async function finalizeExercise(id, logKey, def){
 }
 
 function renderExercises(){
-  const {tplKey, logKey} = currentLogKey();
-  const ids = sessionExerciseIds(tplKey, logKey);
+  const {tplKey, idx, logKey} = currentLogKey();
+  const ids = sessionExerciseIds(currentWeek, tplKey, idx, logKey);
   const extraIds = extras[logKey] || [];
   const phase = phaseForWeek(currentWeek).key;
   const wrap = document.getElementById('exerciseList');
   wrap.innerHTML = '';
 
+  if(ids.length === 0){
+    wrap.innerHTML = '<div class="empty">Nothing scheduled here — everything is covered elsewhere this week.</div>';
+  }
+
   ids.forEach(id=>{
-    const def = getExDef(id);
+    const def = effectiveDef(id);
     if(!def) return;
     const st = getExState(id);
-    const targetW = targetWeightFor(id, currentWeek);
     const targetSets = targetSetsFor(id, currentWeek, logKey);
     const entry = st.log[logKey];
     const isExtra = extraIds.includes(id);
-    const partnerId = SUPERSET_PAIRS[id];
-    const hasPartner = partnerId && ids.includes(partnerId);
+    const partners = (SUPERSET_PAIRS[id]||[]).filter(pid=>ids.includes(pid));
+    const partnerName = partners.length ? getExDef(partners[0]).name : null;
 
     const card = document.createElement('div');
     card.className = 'card';
 
     if(entry){
-      // fully logged — show summary + re-log option
       card.innerHTML = `
         <div class="card-top">
           <div>
             <div class="ex-name">${def.name}${isExtra ? ' <span style="color:var(--muted);font-size:11px;text-transform:none;font-family:var(--font-body)">(added)</span>' : ''}</div>
             <div class="ex-target">${entry.weight}kg · ${entry.reps.join(', ')} reps</div>
-            ${hasPartner ? `<div class="ex-superset">⚡ Superset with ${getExDef(partnerId).name}</div>` : ''}
+            ${partnerName ? `<div class="ex-superset">⚡ Superset with ${partnerName}</div>` : ''}
           </div>
         </div>
         <div class="card-actions">
@@ -711,7 +818,7 @@ function renderExercises(){
           <div class="ex-name">${def.name}${isExtra ? ' <span style="color:var(--muted);font-size:11px;text-transform:none;font-family:var(--font-body)">(added)</span>' : ''}</div>
           <div class="ex-target">${targetSets} sets · ${def.repMin}-${def.repMax} reps</div>
           ${showWarmup ? `<div class="ex-warmup">Warm-up: ${warmupLine(p.weight)}</div>` : ''}
-          ${hasPartner ? `<div class="ex-superset">⚡ Superset with ${getExDef(partnerId).name}</div>` : ''}
+          ${partnerName ? `<div class="ex-superset">⚡ Superset with ${partnerName}</div>` : ''}
         </div>
         <div style="text-align:right">
           <input class="weight-edit" type="number" step="0.5" value="${p.weight}" data-weightfor="${id}">
@@ -727,7 +834,6 @@ function renderExercises(){
     wrap.appendChild(card);
   });
 
-  // re-log — restores previous values, all pre-locked, so a single set can be unlocked and fixed
   wrap.querySelectorAll('[data-relog]').forEach(btn=>{
     btn.onclick = async ()=>{
       const id = btn.getAttribute('data-relog');
@@ -747,7 +853,6 @@ function renderExercises(){
     };
   });
 
-  // weight edit — updates pending weight
   wrap.querySelectorAll('[data-weightfor]').forEach(inp=>{
     inp.onchange = ()=>{
       const id = inp.getAttribute('data-weightfor');
@@ -758,7 +863,6 @@ function renderExercises(){
     };
   });
 
-  // rep input — updates pending reps live
   wrap.querySelectorAll('input[data-set]').forEach(inp=>{
     inp.oninput = ()=>{
       const id = inp.getAttribute('data-id');
@@ -770,12 +874,11 @@ function renderExercises(){
     };
   });
 
-  // lock/unlock a set — colors it immediately, auto-submits when all sets locked
   wrap.querySelectorAll('[data-lockset]').forEach(btn=>{
     btn.onclick = async ()=>{
       const id = btn.getAttribute('data-lockset');
       const setIdx = parseInt(btn.getAttribute('data-set'));
-      const def = getExDef(id);
+      const def = effectiveDef(id);
       const {logKey} = currentLogKey();
       const key = pendingKey(logKey, id);
       const p = pending[key];
@@ -785,7 +888,6 @@ function renderExercises(){
       const input = card.querySelector(`input[data-id="${id}"][data-set="${setIdx}"]`);
 
       if(p.locked[setIdx]){
-        // already locked — tap again to unlock and fix
         p.locked[setIdx] = false;
         await savePending();
         renderExercises();
@@ -804,7 +906,6 @@ function renderExercises(){
     };
   });
 
-  // skip a program lift for today only
   wrap.querySelectorAll('[data-skip]').forEach(btn=>{
     btn.onclick = async ()=>{
       const id = btn.getAttribute('data-skip');
@@ -816,7 +917,6 @@ function renderExercises(){
     };
   });
 
-  // remove an added extra for today
   wrap.querySelectorAll('[data-remove]').forEach(btn=>{
     btn.onclick = async ()=>{
       const id = btn.getAttribute('data-remove');
@@ -828,64 +928,11 @@ function renderExercises(){
     };
   });
 
-  renderSuggestions(wrap, tplKey, logKey, ids);
-  renderAddExercise(wrap, tplKey, logKey, ids);
+  renderAddExercise(wrap, tplKey, idx, logKey, ids);
   renderSessionNotes(wrap, logKey);
 }
 
-function renderSessionNotes(wrap, logKey){
-  const box = document.createElement('div');
-  box.className = 'info-card';
-  const existing = sessionNotes[logKey] || '';
-  box.innerHTML = `
-    <div class="section-title" style="margin:0 0 10px">Session notes</div>
-    <textarea id="sessionNoteInput" placeholder="Optional — e.g. felt heavy, rushed warm-up, slept badly" style="width:100%;min-height:60px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;font-size:13px;font-family:var(--font-body);resize:vertical">${existing}</textarea>
-  `;
-  wrap.appendChild(box);
-  const ta = box.querySelector('#sessionNoteInput');
-  ta.onblur = async ()=>{
-    const val = ta.value.trim();
-    if(val) sessionNotes[logKey] = val; else delete sessionNotes[logKey];
-    await saveSessionNotes();
-  };
-}
-
-function renderSuggestions(wrap, tplKey, logKey, currentIds){
-  if(sessionsThisWeek(currentWeek) !== 2) return;
-  const missing = missingMusclesThisWeek(currentWeek);
-  if(missing.length === 0) return;
-
-  const currentSet = new Set(currentIds);
-  const chips = missing
-    .map(m => suggestedExerciseForMuscle(m, currentSet))
-    .filter(Boolean);
-  if(chips.length === 0) return;
-
-  const box = document.createElement('div');
-  box.className = 'suggest-card';
-  box.innerHTML = `
-    <div class="stitle">Only 2 sessions this week</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Push/Pull doesn't otherwise train ${missing.join(', ')}. Worth adding one:</div>
-    <div class="chip-row">
-      ${chips.map(c=>`<div class="chip" data-suggest="${c.id}">+ ${c.name}</div>`).join('')}
-    </div>
-  `;
-  wrap.appendChild(box);
-
-  box.querySelectorAll('[data-suggest]').forEach(chip=>{
-    chip.onclick = async ()=>{
-      const id = chip.getAttribute('data-suggest');
-      extras[logKey] = (extras[logKey] || []).concat(id);
-      if(!exState[id]) exState[id] = {weight: getExDef(id).startWeight, missStreak:0, log:{}};
-      await saveExtras();
-      await saveExState();
-      renderBar();
-      renderExercises();
-    };
-  });
-}
-
-function renderAddExercise(wrap, tplKey, logKey, currentIds){
+function renderAddExercise(wrap, tplKey, idx, logKey, currentIds){
   const currentSet = new Set(currentIds);
   const fourDay = sessionsThisWeek(currentWeek) === 4;
 
@@ -900,10 +947,11 @@ function renderAddExercise(wrap, tplKey, logKey, currentIds){
     let label = def.name;
     if(fourDay){
       const count = muscleCountThisWeek(currentWeek, def.muscle, logKey);
-      const alreadyToday = muscleCoveredOnDay(tplKey, logKey, def.muscle);
+      const alreadyToday = muscleCoveredOnDay(currentWeek, tplKey, idx, logKey, def.muscle);
       const projected = count + (alreadyToday ? 0 : 1);
       if(projected >= 3) label += ' ⚠️ 3rd hit this wk';
     }
+    if(!machineAvailable(def)) label += ' (not in your gym)';
     if(!grouped[def.muscle]) grouped[def.muscle] = [];
     grouped[def.muscle].push({id:def.id, label});
   });
@@ -981,12 +1029,42 @@ function renderAddExercise(wrap, tplKey, logKey, currentIds){
   };
 }
 
+function renderSessionNotes(wrap, logKey){
+  const box = document.createElement('div');
+  box.className = 'info-card';
+  const existing = sessionNotes[logKey] || '';
+  box.innerHTML = `
+    <div class="section-title" style="margin:0 0 10px">Session notes</div>
+    <textarea id="sessionNoteInput" placeholder="Optional — e.g. felt heavy, rushed warm-up, slept badly" style="width:100%;min-height:60px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;font-size:13px;font-family:var(--font-body);resize:vertical">${existing}</textarea>
+  `;
+  wrap.appendChild(box);
+  const ta = box.querySelector('#sessionNoteInput');
+  ta.onblur = async ()=>{
+    const val = ta.value.trim();
+    if(val) sessionNotes[logKey] = val; else delete sessionNotes[logKey];
+    await saveSessionNotes();
+  };
+}
+
 function renderWeekHeader(){
   document.getElementById('weekNumLabel').textContent = currentWeek;
   const p = phaseForWeek(currentWeek);
   const lbl = document.getElementById('phaseLabel');
   lbl.textContent = p.label;
   lbl.className = 'phase' + (p.key==='deload' ? ' deload' : '');
+}
+
+function renderPlanSettings(){
+  setupSeg('planGoalSeg', Object.keys(GOAL_PROFILES).map(k=>({value:k, label:GOAL_PROFILES[k].label})), meta.goalProfile||'balanced', async v=>{
+    meta.goalProfile = v;
+    await saveMeta();
+    renderAll();
+  });
+  setupSeg('planPaceSeg', Object.keys(PROGRESSION_SCALES).map(k=>({value:k, label:PROGRESSION_SCALES[k].label})), meta.progressionScale||'standard', async v=>{
+    meta.progressionScale = v;
+    await saveMeta();
+    renderAll();
+  });
 }
 
 /* ---------------- RENDER: STRENGTH ---------------- */
@@ -1022,6 +1100,7 @@ function renderStrength(){
   document.getElementById('e1rmSquat').textContent = latest('squat') ?? '–';
   document.getElementById('e1rmBench').textContent = latest('bench') ?? '–';
   document.getElementById('e1rmRdl').textContent = latest('rdl') ?? '–';
+  document.getElementById('e1rmDeadlift').textContent = latest('deadlift') ?? '–';
 
   const table = document.getElementById('strengthTable');
   table.innerHTML = '<div class="st-row head"><span>Week</span><span>Squat</span><span>Bench</span><span>RDL</span></div>';
@@ -1072,18 +1151,27 @@ function renderLibrary(){
     block.className = 'lib-group';
     let html = `<h3>${title}</h3>`;
     ALL_MUSCLES.filter(m=>byMuscle[m]).forEach(m=>{
-      byMuscle[m].forEach(def=>{
-        const st = exState[def.id];
-        const w = st ? st.weight : def.startWeight;
+      byMuscle[m].forEach(rawDef=>{
+        const def = effectiveDef(rawDef.id);
+        const st = exState[rawDef.id];
+        const w = st ? st.weight : rawDef.startWeight;
+        const unavailable = !machineAvailable(rawDef);
+        const cue = rawDef.cue || '';
         html += `
           <div class="lib-row">
-            <div>
-              <div class="li-name">${def.name}</div>
-              <div class="li-meta">${w}kg current · ${def.sets}×${def.repMin}-${def.repMax}</div>
+            <div class="lib-row-top" data-toggle="${rawDef.id}">
+              <div>
+                <div class="li-name">${def.name}</div>
+                <div class="li-meta">${w}kg current · ${def.sets}×${def.repMin}-${def.repMax}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="lib-tag${unavailable?' warn':''}">${unavailable ? 'not in your gym' : m}</span>
+                ${removable ? `<div class="lib-remove" data-libremove="${rawDef.id}" data-type="${removable}">${removable==='hide' ? 'Hide' : 'Delete'}</div>` : ''}
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span class="lib-tag">${m}</span>
-              ${removable ? `<div class="lib-remove" data-libremove="${def.id}" data-type="${removable}">${removable==='hide' ? 'Hide' : 'Delete'}</div>` : ''}
+            <div class="lib-detail" id="detail-${rawDef.id}">
+              ${cue ? cue+'<br>' : ''}
+              <a href="${videoSearchUrl(def.name)}" target="_blank" rel="noopener">▶ Watch form videos</a>
             </div>
           </div>`;
       });
@@ -1092,15 +1180,24 @@ function renderLibrary(){
     wrap.appendChild(block);
   }
 
-  groupBlock('Program lifts (fixed — Push/Pull)', Object.values(EX), null);
+  groupBlock('Program lifts (fixed)', Object.values(EX), null);
   const visibleLibrary = Object.values(LIBRARY).filter(e=>!hiddenLibrary.includes(e.id));
   groupBlock('Starter library', visibleLibrary, 'hide');
   if(Object.values(customEx).length){
     groupBlock('Your custom exercises', Object.values(customEx), 'delete');
   }
 
+  wrap.querySelectorAll('[data-toggle]').forEach(row=>{
+    row.onclick = (e)=>{
+      if(e.target.closest('[data-libremove]')) return;
+      const id = row.getAttribute('data-toggle');
+      document.getElementById('detail-'+id).classList.toggle('open');
+    };
+  });
+
   wrap.querySelectorAll('[data-libremove]').forEach(btn=>{
-    btn.onclick = async ()=>{
+    btn.onclick = async (e)=>{
+      e.stopPropagation();
       const id = btn.getAttribute('data-libremove');
       const type = btn.getAttribute('data-type');
       if(type==='hide'){
@@ -1117,46 +1214,140 @@ function renderLibrary(){
       renderLibrary();
     };
   });
+
+  document.getElementById('gymMachinesList').value = (meta.availableMachines||[]).join('\n');
 }
 
-/* ---------------- RENDER: PROGRESS ---------------- */
-function renderProgress(){
-  const grid = progressLog.slice().sort((a,b)=>a.week-b.week);
-  const latest = grid.length ? grid[grid.length-1] : null;
+/* ---------------- RENDER: SETUP (first run) ---------------- */
+let setupPrefs = {ohp:'ohp', row:'row', rdl:'rdl', squat:'squat', bench:'bench'};
+let setupSessions = 3;
+let setupGoal = 'balanced';
+let setupPace = 'standard';
+let setupEquip = 'mix';
+let setupMachines = '';
 
-  document.getElementById('statCurrent').textContent = latest ? latest.weight : '–';
-  document.getElementById('statLost').textContent = latest ? (GOAL_START - latest.weight).toFixed(1) : '–';
-  document.getElementById('statToGo').textContent = latest ? Math.max(0, (latest.weight - GOAL_END_HIGH)).toFixed(1) : '–';
-  document.getElementById('statWeeksLeft').textContent = Math.max(0, TOTAL_WEEKS - currentWeek);
+function setupSeg(containerId, options, current, onPick){
+  const wrap = document.getElementById(containerId);
+  wrap.innerHTML = '';
+  options.forEach(opt=>{
+    const el = document.createElement('div');
+    el.className = 'seg' + (current===opt.value ? ' active':'');
+    el.textContent = opt.label;
+    el.onclick = ()=>{ onPick(opt.value); };
+    wrap.appendChild(el);
+  });
+}
 
-  const hist = document.getElementById('historyList');
-  hist.innerHTML = grid.length===0 ? '<div class="empty">No entries yet</div>' :
-    grid.slice().reverse().map(g=>`
-      <div class="history-row">
-        <span class="d">Week ${g.week}</span>
-        <span>${g.weight} kg${g.waist ? ' · '+g.waist+' cm waist' : ''}</span>
-      </div>`).join('');
-
-  const chartWrap = document.getElementById('chartWrap');
-  if(grid.length>=2){
-    chartWrap.style.display='block';
-    const weights = grid.map(g=>g.weight);
-    const min = Math.min(...weights)-1, max = Math.max(...weights)+1;
-    const pts = grid.map((g,i)=>{
-      const x = (i/(grid.length-1))*280 + 10;
-      const y = 90 - ((g.weight-min)/(max-min))*80;
-      return x+','+y;
-    }).join(' ');
-    document.getElementById('chartSvg').innerHTML = `
-      <polyline points="${pts}" fill="none" stroke="#c9f04d" stroke-width="2"/>
-      ${grid.map((g,i)=>{
-        const x = (i/(grid.length-1))*280 + 10;
-        const y = 90 - ((g.weight-min)/(max-min))*80;
-        return `<circle cx="${x}" cy="${y}" r="2.5" fill="#c9f04d"/>`;
-      }).join('')}`;
-  } else {
-    chartWrap.style.display='none';
+function applyEquipDefaults(){
+  if(setupEquip==='machines'){
+    setupPrefs.squat='legPressMachine'; setupPrefs.bench='machineChestPress';
+    setupPrefs.ohp='shoulderPressMachine'; setupPrefs.row='seatedRowMachine';
+  } else if(setupEquip==='cables'){
+    setupPrefs.squat='squat'; setupPrefs.bench='bench';
+    setupPrefs.ohp='ohp'; setupPrefs.row='cableRow';
+  } else if(setupEquip==='freeweights'){
+    setupPrefs.squat='squat'; setupPrefs.bench='bench';
+    setupPrefs.ohp='ohp'; setupPrefs.row='row';
   }
+  // 'mix' leaves current choices alone
+}
+
+function renderSetup(){
+  setupSeg('setupEquipSeg', [
+    {value:'freeweights', label:'Free weights'},
+    {value:'machines', label:'Machines'},
+    {value:'cables', label:'Cables'},
+    {value:'mix', label:'Mix of everything'},
+  ], setupEquip, v=>{
+    setupEquip=v;
+    applyEquipDefaults();
+    renderSetup();
+  });
+  document.getElementById('setupMachinesWrap').style.display = setupEquip==='machines' ? 'block' : 'none';
+
+  setupSeg('setupSquatSeg', [
+    {value:'squat', label:'Back Squat'},
+    {value:'legPressMachine', label:'Leg Press Machine'},
+  ], setupPrefs.squat, v=>{setupPrefs.squat=v; renderSetup();});
+
+  setupSeg('setupBenchSeg', [
+    {value:'bench', label:'Bench Press'},
+    {value:'machineChestPress', label:'Chest Press Machine'},
+  ], setupPrefs.bench, v=>{setupPrefs.bench=v; renderSetup();});
+
+  setupSeg('setupOhpSeg', [
+    {value:'ohp', label:'Overhead Press (barbell)'},
+    {value:'dbShoulderPress', label:'DB Shoulder Press'},
+    {value:'shoulderPressMachine', label:'Shoulder Press Machine'},
+  ], setupPrefs.ohp, v=>{setupPrefs.ohp=v; renderSetup();});
+
+  setupSeg('setupRowSeg', [
+    {value:'row', label:'Barbell Row'},
+    {value:'cableRow', label:'Cable Row'},
+    {value:'seatedRowMachine', label:'Seated Row Machine'},
+  ], setupPrefs.row, v=>{setupPrefs.row=v; renderSetup();});
+
+  setupSeg('setupRdlSeg', [
+    {value:'rdl', label:'Romanian Deadlift (barbell)'},
+    {value:'dbRDL', label:'Dumbbell RDL'},
+  ], setupPrefs.rdl, v=>{setupPrefs.rdl=v; renderSetup();});
+
+  setupSeg('setupSessionsSeg', [
+    {value:2, label:'2 / week'}, {value:3, label:'3 / week'}, {value:4, label:'4 / week'}
+  ], setupSessions, v=>{setupSessions=v; renderSetup();});
+
+  setupSeg('setupGoalSeg', Object.keys(GOAL_PROFILES).map(k=>({value:k, label:GOAL_PROFILES[k].label})), setupGoal, v=>{setupGoal=v; renderSetup();});
+  setupSeg('setupPaceSeg', Object.keys(PROGRESSION_SCALES).map(k=>({value:k, label:PROGRESSION_SCALES[k].label})), setupPace, v=>{setupPace=v; renderSetup();});
+
+  const coreIds = [setupPrefs.squat, setupPrefs.bench, setupPrefs.ohp, setupPrefs.row, setupPrefs.rdl, 'deadlift'];
+  const wrap = document.getElementById('setupWeights');
+  const existing = {};
+  coreIds.forEach(id=>{
+    const inp = document.getElementById('w_'+id);
+    if(inp) existing[id] = inp.value;
+  });
+  const machinesVal = document.getElementById('setupMachinesList') ? document.getElementById('setupMachinesList').value : '';
+  wrap.innerHTML = coreIds.map(id=>{
+    const def = getExDef(id);
+    const val = existing[id] !== undefined ? existing[id] : def.startWeight;
+    return `<div class="plan-row"><span>${def.name}</span><input id="w_${id}" type="number" step="0.5" value="${val}" style="width:80px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--chalk);padding:6px;font-family:var(--font-mono);text-align:right"></div>`;
+  }).join('');
+
+  if(document.getElementById('setupMachinesList')) document.getElementById('setupMachinesList').value = machinesVal;
+}
+
+async function completeSetup(){
+  prefs = {ohp:setupPrefs.ohp, row:setupPrefs.row, rdl:setupPrefs.rdl, squat:setupPrefs.squat, bench:setupPrefs.bench};
+  await savePrefs();
+
+  const coreIds = [setupPrefs.squat, setupPrefs.bench, setupPrefs.ohp, setupPrefs.row, setupPrefs.rdl, 'deadlift'];
+  coreIds.forEach(id=>{
+    const inp = document.getElementById('w_'+id);
+    const w = parseFloat(inp.value) || getExDef(id).startWeight;
+    exState[id] = {weight: w, missStreak:0, log:{}};
+  });
+  if(!exState.frontSquat){
+    const squatW = exState[setupPrefs.squat] ? exState[setupPrefs.squat].weight : EX.squat.startWeight;
+    exState.frontSquat = {weight: Math.round((squatW*0.8)/2.5)*2.5, missStreak:0, log:{}};
+  }
+  await saveExState();
+
+  meta.sessions[1] = setupSessions;
+  meta.goalProfile = setupGoal;
+  meta.progressionScale = setupPace;
+  meta.equipmentPref = setupEquip;
+  if(setupEquip==='machines'){
+    const txt = document.getElementById('setupMachinesList').value;
+    meta.availableMachines = txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  }
+  meta.onboarded = true;
+  currentWeek = 1;
+  await saveMeta();
+
+  document.getElementById('view-setup').classList.remove('active');
+  document.querySelector('.nav').style.display = 'flex';
+  document.getElementById('view-today').classList.add('active');
+  renderAll();
 }
 
 /* ---------------- NAV / WIRING ---------------- */
@@ -1168,10 +1359,10 @@ function renderAll(){
   renderDayTabs();
   renderBar();
   renderExercises();
+  renderPlanSettings();
   renderStrength();
   renderWeeklyVolume();
   renderLibrary();
-  renderProgress();
 }
 
 document.getElementById('prevWeek').onclick = async ()=>{
@@ -1190,19 +1381,6 @@ document.querySelectorAll('.navbtn').forEach(btn=>{
   };
 });
 
-document.getElementById('saveProgress').onclick = async ()=>{
-  const w = parseFloat(document.getElementById('inputWeight').value);
-  const waist = parseFloat(document.getElementById('inputWaist').value);
-  if(!w) return;
-  const idx = progressLog.findIndex(g=>g.week===currentWeek);
-  const entry = {week: currentWeek, weight: w, waist: waist || null};
-  if(idx>=0) progressLog[idx] = entry; else progressLog.push(entry);
-  await saveProgressLog();
-  document.getElementById('inputWeight').value='';
-  document.getElementById('inputWaist').value='';
-  renderProgress();
-};
-
 document.getElementById('exportBtn').onclick = exportData;
 document.getElementById('importBtn').onclick = ()=> document.getElementById('importFile').click();
 document.getElementById('importFile').onchange = (e)=>{
@@ -1210,12 +1388,31 @@ document.getElementById('importFile').onchange = (e)=>{
   if(file) importData(file);
   e.target.value = '';
 };
+document.getElementById('saveMachinesBtn').onclick = async ()=>{
+  const txt = document.getElementById('gymMachinesList').value;
+  meta.availableMachines = txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  await saveMeta();
+  renderAll();
+};
+
+document.getElementById('setupStartBtn').onclick = completeSetup;
 
 document.getElementById('dateTag').textContent = new Date().toLocaleDateString(undefined,{month:'short', day:'numeric'});
 
 (async function init(){
   await loadState();
-  renderAll();
+  if(meta.onboarded === undefined){
+    meta.onboarded = Object.keys(exState).length > 0;
+    await saveMeta();
+  }
+  if(!meta.onboarded){
+    document.querySelector('.nav').style.display = 'none';
+    document.getElementById('view-setup').classList.add('active');
+    renderSetup();
+  } else {
+    document.getElementById('view-today').classList.add('active');
+    renderAll();
+  }
 })();
 </script>
 </body>
